@@ -25,7 +25,11 @@ class DeleteAccountTest extends TestCase
             ->set('password', 'password')
             ->call('deleteUser');
 
-        $this->assertNull($user->fresh());
+        // El proyecto agrega SoftDeletes a User para poder revocar acceso de
+        // forma inmediata sin perder el historial (bitácora de auditoría), por
+        // lo que la baja de cuenta ahora es un borrado suave, no definitivo.
+        $this->assertSoftDeleted($user);
+        $this->assertGuest();
     }
 
     public function test_correct_password_must_be_provided_before_account_can_be_deleted(): void

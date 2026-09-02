@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Rol;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -36,7 +37,35 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'profile_photo_path' => null,
             'current_team_id' => null,
+            'rol_id' => null,
+            'activo' => true,
         ];
+    }
+
+    /**
+     * Asigna al usuario el rol de administrador (acceso total).
+     */
+    public function administrador(): static
+    {
+        return $this->state(fn () => [
+            'rol_id' => Rol::firstOrCreate(
+                ['clave' => 'administrador'],
+                ['nombre' => 'Administrador']
+            )->id,
+        ]);
+    }
+
+    /**
+     * Asigna al usuario el rol de administrador de contenido (sin usuarios/roles/configuración).
+     */
+    public function administradorContenido(): static
+    {
+        return $this->state(fn () => [
+            'rol_id' => Rol::firstOrCreate(
+                ['clave' => 'administrador_contenido'],
+                ['nombre' => 'Administrador de Contenido']
+            )->id,
+        ]);
     }
 
     /**

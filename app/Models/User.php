@@ -5,6 +5,8 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -20,6 +22,7 @@ class User extends Authenticatable
 
     use HasProfilePhoto;
     use Notifiable;
+    use SoftDeletes;
     use TwoFactorAuthenticatable;
 
     /**
@@ -31,6 +34,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'rol_id',
+        'activo',
     ];
 
     /**
@@ -64,6 +69,26 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'activo' => 'boolean',
         ];
+    }
+
+    /**
+     * Rol administrativo del usuario (administrador / administrador_contenido).
+     * Es nulo para cuentas sin privilegios administrativos.
+     *
+     * @return BelongsTo<Rol, $this>
+     */
+    public function rol(): BelongsTo
+    {
+        return $this->belongsTo(Rol::class);
+    }
+
+    /**
+     * Verifica de forma null-safe si el usuario tiene el rol indicado por su clave.
+     */
+    public function tieneRol(string $claveRol): bool
+    {
+        return $this->rol?->clave === $claveRol;
     }
 }
