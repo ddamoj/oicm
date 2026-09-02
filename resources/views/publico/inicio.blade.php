@@ -2,6 +2,7 @@
     <x-hero
         :alto="true"
         titulo="Transparencia y control interno al alcance de todos"
+        resaltar="control interno"
         subtitulo="El Órgano Interno de Control Municipal de Oaxaca de Juárez concentra en un solo espacio la normatividad, los documentos, avisos y trámites institucionales."
     >
         <div class="flex flex-col gap-3 sm:flex-row">

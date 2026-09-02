@@ -98,21 +98,18 @@
                     </ul>
                 </nav>
             </div>
-
-            <div class="linea-acento" aria-hidden="true"></div>
         </header>
 
         <main id="contenido-principal" class="flex-1">
             {{ $slot }}
         </main>
 
-        <footer class="greca-patron relative overflow-hidden bg-primario-oscuro text-white/90">
-            <div class="linea-acento" aria-hidden="true"></div>
+        <footer class="relative overflow-hidden border-t border-primario-oscuro bg-primario-oscuro text-white/90">
+            <x-sello-oicm class="pointer-events-none absolute -right-16 -top-20 size-96 text-white/[0.045]" />
 
             <div class="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
                 <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
                     <div>
-                        <img src="{{ asset('assets/sitio/images/logo-verde-escudo.png') }}" alt="" aria-hidden="true" class="mb-4 h-11 w-auto brightness-0 invert opacity-90">
                         <div class="inline-block rounded-lg bg-white p-2.5">
                             <img src="{{ asset('assets/sitio/images/logo-verde-horizontal.png') }}" alt="Municipio de Oaxaca de Juárez" class="h-8 w-auto">
                         </div>

@@ -4,8 +4,10 @@
     'icono' => null,
 ])
 
-<div {{ $attributes->merge(['class' => 'greca-patron-oscura relative flex flex-col items-center justify-center overflow-hidden rounded-xl border border-dashed border-borde bg-superficie-alterna px-6 py-16 text-center']) }}>
-    <div class="mb-4 flex size-14 items-center justify-center rounded-full bg-primario-claro text-primario">
+<div {{ $attributes->merge(['class' => 'relative flex flex-col items-center justify-center overflow-hidden rounded-xl border border-dashed border-borde bg-superficie-alterna px-6 py-16 text-center']) }}>
+    <x-sello-oicm class="pointer-events-none absolute -right-10 -top-10 size-56 text-primario/[0.05]" />
+
+    <div class="relative mb-4 flex size-14 items-center justify-center rounded-full bg-primario-claro text-primario">
         @if ($icono)
             {{ $icono }}
         @else
@@ -15,13 +17,13 @@
         @endif
     </div>
 
-    <h3 class="text-lg font-semibold tracking-tight text-texto">{{ $titulo }}</h3>
+    <h3 class="relative text-lg font-semibold tracking-tight text-texto">{{ $titulo }}</h3>
 
     @if ($descripcion)
-        <p class="mt-1.5 max-w-sm text-sm text-texto-secundario">{{ $descripcion }}</p>
+        <p class="relative mt-1.5 max-w-sm text-sm text-texto-secundario">{{ $descripcion }}</p>
     @endif
 
     @if ($slot->isNotEmpty())
-        <div class="mt-6">{{ $slot }}</div>
+        <div class="relative mt-6">{{ $slot }}</div>
     @endif
 </div>

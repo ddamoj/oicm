@@ -29,12 +29,11 @@
             :class="menuAbierto ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
             class="fixed inset-y-0 left-0 z-40 flex w-72 flex-col bg-primario-oscuro text-white transition-transform duration-200 ease-institucional lg:static lg:translate-x-0"
         >
-            <div class="relative flex items-center gap-3 border-b border-white/10 px-6 py-5">
+            <div class="flex items-center gap-3 border-b border-white/10 px-6 py-5">
                 <div class="rounded-lg bg-white p-2">
                     <img src="{{ asset('assets/sitio/images/logo-verde-horizontal.png') }}" alt="OICM" class="h-6 w-auto">
                 </div>
                 <span class="font-sans text-sm font-bold leading-tight tracking-tight">Panel de<br>Administración</span>
-                <span class="linea-acento absolute inset-x-0 bottom-0" aria-hidden="true"></span>
             </div>
 
             <nav aria-label="Administración" class="flex-1 overflow-y-auto px-3 py-4">

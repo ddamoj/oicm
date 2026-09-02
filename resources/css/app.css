@@ -33,6 +33,11 @@
     --color-superficie-alterna: #f4f4f2;
     --color-borde: #e2e2df;
 
+    /* Verde profundo: cuarto punto tonal (más oscuro que primario-oscuro),
+       solo para el extremo de los degradados oscuros del hero/footer —
+       le da profundidad cinematográfica sin salir de la familia del verde. */
+    --color-primario-profundo: #0e2b25;
+
     /* Estados funcionales: fuera de la paleta de marca por exigencia de
        accesibilidad (distinguir éxito/error sin depender solo del texto) */
     --color-exito: #1f7a4d;
@@ -129,32 +134,23 @@
         animation: var(--animate-barrido);
     }
 
-    /* Hilo de acento institucional (verde → lima → verde): único remate
-       decorativo que enmarca header/footer, discreto pero identificable. */
-    .linea-acento {
-        height: 3px;
-        background: linear-gradient(90deg, var(--color-primario) 0%, var(--color-acento) 50%, var(--color-primario) 100%);
-    }
-
-    /* Greca escalonada (motivo geométrico de tradición oaxaqueña, ref. Mitla)
-       como textura de fondo tenue. Se usa como marca de agua, nunca como
-       elemento de alto contraste, para no competir con el contenido. */
-    .greca-patron {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cpath d='M6 50V16h34v26H17V28h11v8' fill='none' stroke='%23ffffff' stroke-opacity='0.07' stroke-width='2'/%3E%3C/svg%3E");
-        background-size: 56px 56px;
-    }
-
-    /* Variante oscura de la greca, para usarla sobre fondos claros
-       (secciones alternas o tarjetas destacadas). */
-    .greca-patron-oscura {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cpath d='M6 50V16h34v26H17V28h11v8' fill='none' stroke='%23265b4d' stroke-opacity='0.06' stroke-width='2'/%3E%3C/svg%3E");
-        background-size: 56px 56px;
-    }
-
     /* Texto pequeño superior ("eyebrow") para anteceder títulos de sección
        con la voz institucional, sin depender solo del tamaño de fuente. */
     .antetitulo {
         @apply inline-flex items-center gap-2 font-sans text-xs font-bold uppercase tracking-[0.14em] text-acento-oscuro;
+    }
+
+    /* Aurora institucional: fondo de superficies oscuras (hero, footer).
+       Reemplaza el uso de un verde plano o de texturas prestadas: dos
+       resplandores suaves (lima arriba-izquierda, blanco abajo-derecha)
+       sobre un degradado de tres puntos tonales propios de la marca.
+       Firma visual exclusiva del OICM, no un patrón geométrico prestado. */
+    .aurora-oicm {
+        position: relative;
+        background:
+            radial-gradient(52% 45% at 12% -6%, rgba(205, 222, 0, 0.22), transparent 68%),
+            radial-gradient(60% 55% at 105% 105%, rgba(255, 255, 255, 0.07), transparent 65%),
+            linear-gradient(165deg, var(--color-primario) 0%, var(--color-primario-oscuro) 62%, var(--color-primario-profundo) 100%);
     }
 }
 

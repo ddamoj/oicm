@@ -1,40 +1,53 @@
 @props([
     'titulo',
     'subtitulo' => null,
+    'resaltar' => null, // fragmento literal de $titulo a destacar en acento (uso editorial, no de usuario)
     'alto' => false, // true = hero de portada (más alto); false = hero de página interior
 ])
 
-<header class="relative overflow-hidden bg-primario text-white {{ $alto ? 'py-24 sm:py-32' : 'py-16 sm:py-24' }}">
-    {{-- Base tonal: del verde institucional a su variante oscura --}}
-    <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-primario to-primario-oscuro" aria-hidden="true"></div>
+@php
+    // Envuelve el fragmento a destacar en un span de acento. $titulo es
+    // siempre texto de autor (nunca entrada de usuario), por eso es seguro
+    // construir el HTML aquí en vez de dejarlo solo como prop escapada.
+    $tituloHtml = e($titulo);
 
-    {{-- Greca escalonada como textura de fondo: sello local, discreto --}}
-    <div class="greca-patron pointer-events-none absolute inset-0" aria-hidden="true"></div>
+    if ($resaltar && str_contains($titulo, $resaltar)) {
+        $tituloHtml = str_replace(
+            e($resaltar),
+            '<span class="text-acento">' . e($resaltar) . '</span>',
+            $tituloHtml
+        );
+    }
+@endphp
 
-    {{-- Resplandor lima detrás del contenido: cálido, no un simple blur genérico --}}
-    <div class="pointer-events-none absolute inset-0 [background:radial-gradient(60%_55%_at_18%_0%,rgba(205,222,0,0.16),transparent_70%)]" aria-hidden="true"></div>
-
-    {{-- Hilo de acento inferior, remate de marca --}}
-    <div class="linea-acento absolute inset-x-0 bottom-0" aria-hidden="true"></div>
+<header class="aurora-oicm relative overflow-hidden text-white {{ $alto ? 'py-28 sm:py-36' : 'py-16 sm:py-24' }}">
+    {{-- Sello de control: única marca de agua, sangrada fuera del lienzo —
+         nunca un patrón repetido. Firma visual propia del OICM. --}}
+    <x-sello-oicm class="pointer-events-none absolute -right-24 -bottom-28 size-[26rem] text-white/[0.06] sm:size-[34rem]" />
 
     <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl animate-aparecer">
             @isset($etiqueta)
                 <div class="mb-5">{{ $etiqueta }}</div>
+            @else
+                <p class="mb-5 inline-flex items-center gap-2 font-sans text-xs font-bold uppercase tracking-[0.2em] text-acento">
+                    <span class="size-1.5 rounded-full bg-acento" aria-hidden="true"></span>
+                    Órgano Interno de Control Municipal
+                </p>
             @endisset
 
-            <h1 class="text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl {{ $alto ? 'sm:text-7xl' : '' }}">
-                {{ $titulo }}
+            <h1 class="text-5xl font-bold leading-[1.02] tracking-tight sm:text-6xl {{ $alto ? 'lg:text-7xl' : '' }}">
+                {!! $tituloHtml !!}
             </h1>
 
             @if ($subtitulo)
-                <p class="mt-6 max-w-2xl text-lg leading-relaxed text-white/80 sm:text-xl">
+                <p class="mt-7 max-w-2xl text-lg leading-relaxed text-white/75 sm:text-xl">
                     {{ $subtitulo }}
                 </p>
             @endif
 
             @if ($slot->isNotEmpty())
-                <div class="mt-9">
+                <div class="mt-10">
                     {{ $slot }}
                 </div>
             @endif
