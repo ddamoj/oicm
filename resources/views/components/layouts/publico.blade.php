@@ -18,33 +18,36 @@
 
         <header class="sticky top-0 z-40 border-b border-borde bg-white/90 backdrop-blur">
             <div x-data="{ menuAbierto: false }" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div class="flex h-18 items-center justify-between py-3">
-                    <a href="{{ route('inicio') }}" class="flex items-center gap-3">
+                <div class="flex h-18 items-center justify-between gap-4 py-3">
+                    <a href="{{ route('inicio') }}" class="flex shrink-0 items-center gap-3">
                         <img src="{{ asset('assets/sitio/images/logo-verde-horizontal.png') }}" alt="Municipio de Oaxaca de Juárez" class="h-9 w-auto">
-                        <span class="hidden border-l border-borde pl-3 font-sans text-sm font-semibold leading-tight text-primario sm:block">
+                        <span class="hidden whitespace-nowrap border-l border-borde pl-3 font-sans text-sm font-bold leading-tight tracking-tight text-primario xl:block">
                             Órgano Interno de<br>Control Municipal
                         </span>
                     </a>
 
                     {{-- Navegación de escritorio --}}
-                    <nav aria-label="Principal" class="hidden lg:block">
-                        <ul class="flex items-center gap-1 text-sm font-semibold">
+                    <nav aria-label="Principal" class="hidden min-w-0 lg:block">
+                        <ul class="flex items-center gap-0.5 whitespace-nowrap text-[13px] font-bold tracking-tight">
                             @foreach (\App\Support\NavegacionPublica::enlaces() as $etiqueta => $ruta)
                                 <li>
                                     <a
                                         href="{{ route($ruta) }}"
-                                        class="rounded-full px-4 py-2.5 transition-colors duration-150 hover:bg-primario-claro hover:text-primario
+                                        class="relative block rounded-full px-3 py-2.5 transition-colors duration-150 hover:bg-primario-claro hover:text-primario
                                                {{ request()->routeIs($ruta) ? 'text-primario' : 'text-texto' }}"
                                         @if (request()->routeIs($ruta)) aria-current="page" @endif
                                     >
                                         {{ $etiqueta }}
+                                        @if (request()->routeIs($ruta))
+                                            <span class="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-acento-oscuro" aria-hidden="true"></span>
+                                        @endif
                                     </a>
                                 </li>
                             @endforeach
                         </ul>
                     </nav>
 
-                    <div class="flex items-center gap-2">
+                    <div class="flex shrink-0 items-center gap-2">
                         <x-boton href="{{ route('login') }}" variante="secundario" tamano="sm" class="hidden sm:inline-flex">
                             Acceso institucional
                         </x-boton>
@@ -95,16 +98,21 @@
                     </ul>
                 </nav>
             </div>
+
+            <div class="linea-acento" aria-hidden="true"></div>
         </header>
 
         <main id="contenido-principal" class="flex-1">
             {{ $slot }}
         </main>
 
-        <footer class="border-t border-borde bg-primario-oscuro text-white/90">
-            <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <footer class="greca-patron relative overflow-hidden bg-primario-oscuro text-white/90">
+            <div class="linea-acento" aria-hidden="true"></div>
+
+            <div class="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
                 <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
                     <div>
+                        <img src="{{ asset('assets/sitio/images/logo-verde-escudo.png') }}" alt="" aria-hidden="true" class="mb-4 h-11 w-auto brightness-0 invert opacity-90">
                         <div class="inline-block rounded-lg bg-white p-2.5">
                             <img src="{{ asset('assets/sitio/images/logo-verde-horizontal.png') }}" alt="Municipio de Oaxaca de Juárez" class="h-8 w-auto">
                         </div>
@@ -114,7 +122,7 @@
                     </div>
 
                     <div>
-                        <h2 class="font-sans text-sm font-semibold uppercase tracking-wide text-acento">Navegación</h2>
+                        <h2 class="font-sans text-xs font-bold uppercase tracking-[0.12em] text-acento">Navegación</h2>
                         <ul class="mt-4 space-y-2 text-sm text-white/70">
                             @foreach (\App\Support\NavegacionPublica::enlaces() as $etiqueta => $ruta)
                                 <li><a href="{{ route($ruta) }}" class="hover:text-white">{{ $etiqueta }}</a></li>
@@ -123,7 +131,7 @@
                     </div>
 
                     <div>
-                        <h2 class="font-sans text-sm font-semibold uppercase tracking-wide text-acento">Contacto</h2>
+                        <h2 class="font-sans text-xs font-bold uppercase tracking-[0.12em] text-acento">Contacto</h2>
                         <ul class="mt-4 space-y-2 text-sm text-white/70">
                             <li>Palacio Municipal, Oaxaca de Juárez, Oax.</li>
                             <li><a href="mailto:contraloria@municipiodeoaxaca.gob.mx" class="hover:text-white">contraloria@municipiodeoaxaca.gob.mx</a></li>
@@ -131,7 +139,7 @@
                     </div>
 
                     <div>
-                        <h2 class="font-sans text-sm font-semibold uppercase tracking-wide text-acento">Canal de quejas y denuncias</h2>
+                        <h2 class="font-sans text-xs font-bold uppercase tracking-[0.12em] text-acento">Canal de quejas y denuncias</h2>
                         <p class="mt-4 text-sm text-white/70">
                             Para reportar irregularidades de personas servidoras públicas municipales, consulta la sección de Contacto.
                         </p>

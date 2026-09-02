@@ -4,7 +4,7 @@
     'icono' => null,
 ])
 
-<div {{ $attributes->merge(['class' => 'flex flex-col items-center justify-center rounded-lg border border-dashed border-borde bg-superficie-alterna px-6 py-16 text-center']) }}>
+<div {{ $attributes->merge(['class' => 'greca-patron-oscura relative flex flex-col items-center justify-center overflow-hidden rounded-xl border border-dashed border-borde bg-superficie-alterna px-6 py-16 text-center']) }}>
     <div class="mb-4 flex size-14 items-center justify-center rounded-full bg-primario-claro text-primario">
         @if ($icono)
             {{ $icono }}
@@ -15,7 +15,7 @@
         @endif
     </div>
 
-    <h3 class="text-lg font-semibold text-texto">{{ $titulo }}</h3>
+    <h3 class="text-lg font-semibold tracking-tight text-texto">{{ $titulo }}</h3>
 
     @if ($descripcion)
         <p class="mt-1.5 max-w-sm text-sm text-texto-secundario">{{ $descripcion }}</p>

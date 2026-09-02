@@ -23,7 +23,7 @@
         'lg' => 'px-8 py-4 text-base',
     ];
 
-    $clasesBase = 'inline-flex items-center justify-center gap-2 rounded-full font-sans font-semibold '
+    $clasesBase = 'inline-flex items-center justify-center gap-2 rounded-full font-sans font-bold tracking-tight '
         . 'transition-all duration-200 ease-institucional disabled:opacity-50 disabled:pointer-events-none '
         . 'active:scale-[0.98]';
 
