@@ -8,7 +8,7 @@
 
 <section {{ $attributes->merge(['class' => 'py-16 sm:py-24 ' . ($alterna ? 'bg-superficie-alterna' : '')]) }}>
     <div class="mx-auto {{ $ancho }} px-4 sm:px-6 lg:px-8">
-        @if ($titulo || $descripcion)
+        @if ($titulo || $descripcion || $antetitulo)
             <div class="mb-12 max-w-3xl">
                 @if ($antetitulo)
                     <p class="antetitulo mb-3">{{ $antetitulo }}</p>
