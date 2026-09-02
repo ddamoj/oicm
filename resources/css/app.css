@@ -15,17 +15,127 @@
 @source '../../vendor/laravel/jetstream/**/*.blade.php';
 
 @theme {
-    /* Paleta institucional OICM */
+    /* Paleta institucional OICM (mandato del cliente, no modificar) */
     --color-primario: #265b4d;
+    --color-primario-oscuro: #1a423a;
+    --color-primario-claro: #e8f0ee;
     --color-acento: #cdde00;
+    --color-acento-oscuro: #a8b800;
     --color-blanco: #ffffff;
     --color-gris: #afafaf;
+    --color-gris-claro: #f4f4f2;
+    --color-gris-oscuro: #6b6b6b;
+
+    /* Tokens semánticos: texto, superficies y bordes derivados de la paleta */
+    --color-texto: #1c1e1d;
+    --color-texto-secundario: #5a5f5c;
+    --color-superficie: #ffffff;
+    --color-superficie-alterna: #f4f4f2;
+    --color-borde: #e2e2df;
+
+    /* Estados funcionales: fuera de la paleta de marca por exigencia de
+       accesibilidad (distinguir éxito/error sin depender solo del texto) */
+    --color-exito: #1f7a4d;
+    --color-exito-suave: #e7f5ec;
+    --color-error: #b3261e;
+    --color-error-suave: #fbeceb;
+    --color-advertencia: #8a6d00;
+    --color-advertencia-suave: #fbf6dc;
 
     /* Tipografía: Montserrat para títulos/UI, Nunito Sans para cuerpo */
     --font-sans: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
     --font-body: 'Nunito Sans', ui-sans-serif, system-ui, sans-serif;
+
+    /* Radios: esquinas suaves y generosas, lenguaje Apple */
+    --radius-sm: 0.5rem;
+    --radius-md: 0.875rem;
+    --radius-lg: 1.25rem;
+    --radius-xl: 1.75rem;
+
+    /* Sombras: difusas y de bajo contraste, nunca duras */
+    --shadow-suave: 0 1px 2px rgba(28, 30, 29, 0.04), 0 8px 24px -12px rgba(28, 30, 29, 0.12);
+    --shadow-flotante: 0 4px 12px rgba(28, 30, 29, 0.06), 0 24px 48px -16px rgba(28, 30, 29, 0.18);
+
+    /* Motion: transiciones cortas y con propósito */
+    --ease-institucional: cubic-bezier(0.22, 1, 0.36, 1);
+    --animate-aparecer: aparecer 0.4s var(--ease-institucional) both;
+    --animate-barrido: barrido 1.4s ease-in-out infinite;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(0.5rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes barrido {
+    100% {
+        transform: translateX(100%);
+    }
 }
 
 [x-cloak] {
-    display: none;
+    display: none !important;
+}
+
+@layer base {
+    body {
+        @apply bg-superficie font-body text-texto antialiased;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        @apply font-sans font-semibold text-texto;
+    }
+
+    /* WCAG 2.4.7: el foco de teclado siempre debe ser visible */
+    a:focus-visible,
+    button:focus-visible,
+    summary:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible,
+    [tabindex]:focus-visible {
+        outline: none;
+        @apply ring-2 ring-acento-oscuro ring-offset-2 ring-offset-superficie;
+    }
+}
+
+@layer components {
+    /* Enlace "saltar al contenido": visible solo al recibir foco por teclado */
+    .saltar-contenido {
+        @apply sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100]
+               focus:rounded-md focus:bg-primario focus:px-4 focus:py-2 focus:text-sm
+               focus:font-semibold focus:text-white focus:shadow-flotante;
+    }
+
+    /* Shimmer sutil para los estados de carga (skeletons) */
+    .cargando-shimmer {
+        position: relative;
+        overflow: hidden;
+        @apply bg-gris-claro;
+    }
+
+    .cargando-shimmer::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        transform: translateX(-100%);
+        background: linear-gradient(90deg, transparent, rgba(38, 91, 77, 0.08), transparent);
+        animation: var(--animate-barrido);
+    }
+}
+
+/* Accesibilidad: quien pida menos movimiento no recibe animaciones */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
 }
