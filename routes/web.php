@@ -26,7 +26,6 @@ foreach (
         'normatividad' => 'Normatividad',
         'direcciones' => 'Direcciones',
         'galeria' => 'Galería',
-        'enlaces' => 'Enlaces de interés',
         'contacto' => 'Contacto',
     ] as $ruta => $titulo
 ) {
@@ -53,6 +52,11 @@ Route::get('/noticias', function () {
 
 Route::get('/noticias/{noticia:slug}', [NoticiaController::class, 'show'])->name('noticias.mostrar');
 
+// Directorio de enlaces de interés (Fase 6, RF-ENL-001/002), sin autenticación.
+Route::get('/enlaces', function () {
+    return view('publico.enlaces');
+})->name('enlaces');
+
 /*
 |--------------------------------------------------------------------------
 | Rutas administrativas
@@ -71,16 +75,6 @@ Route::middleware([
         return view('admin.en-construccion', ['titulo' => 'Panel principal']);
     })->name('panel');
 
-    foreach (
-        [
-            'enlaces' => 'Enlaces',
-        ] as $ruta => $titulo
-    ) {
-        Route::get("/{$ruta}", function () use ($titulo) {
-            return view('admin.en-construccion', ['titulo' => $titulo]);
-        })->name($ruta);
-    }
-
     Route::get('/perfil', function () {
         return view('admin.perfil');
     })->name('perfil');
@@ -95,6 +89,10 @@ Route::middleware([
         Route::get('/noticias', function () {
             return view('admin.noticias');
         })->name('noticias');
+
+        Route::get('/enlaces', function () {
+            return view('admin.enlaces');
+        })->name('enlaces');
     });
 
     // Usuarios y bitácora: exclusivos del rol "administrador" (RF-USR-001).

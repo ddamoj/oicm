@@ -61,4 +61,19 @@ class Enlace extends Model
     {
         return $query->where('categoria_enlace_id', $categoriaEnlaceId);
     }
+
+    /**
+     * Busca por nombre, descripción o URL.
+     *
+     * @param  Builder<Enlace>  $query
+     * @return Builder<Enlace>
+     */
+    public function scopeBuscar(Builder $query, string $palabraClave): Builder
+    {
+        return $query->where(function (Builder $q) use ($palabraClave) {
+            $q->where('nombre', 'like', "%{$palabraClave}%")
+                ->orWhere('descripcion', 'like', "%{$palabraClave}%")
+                ->orWhere('url', 'like', "%{$palabraClave}%");
+        });
+    }
 }
