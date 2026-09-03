@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PaginaInstitucional extends Model
@@ -42,6 +43,16 @@ class PaginaInstitucional extends Model
     public function actualizadoPor(): BelongsTo
     {
         return $this->belongsTo(User::class, 'actualizado_por');
+    }
+
+    /**
+     * Historial de versiones archivadas de esta página (editor de bloques versionados).
+     *
+     * @return HasMany<PaginaInstitucionalVersion, $this>
+     */
+    public function versiones(): HasMany
+    {
+        return $this->hasMany(PaginaInstitucionalVersion::class)->orderByDesc('numero_version');
     }
 
     /**

@@ -18,12 +18,14 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolSeeder::class,
             DireccionSeeder::class,
+            DepartamentoSeeder::class,
             CategoriaDocumentoSeeder::class,
             CategoriaEnlaceSeeder::class,
             NormatividadSeeder::class,
             EnlaceSeeder::class,
             UsuarioSeeder::class,
             NoticiaSeeder::class,
+            PaginaInstitucionalSeeder::class,
         ]);
     }
 }

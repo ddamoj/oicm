@@ -63,6 +63,16 @@ class Direccion extends Model
     }
 
     /**
+     * Departamentos que integran esta dirección (organigrama de la Fase 7).
+     *
+     * @return HasMany<Departamento, $this>
+     */
+    public function departamentos(): HasMany
+    {
+        return $this->hasMany(Departamento::class);
+    }
+
+    /**
      * Filtra únicamente las direcciones activas, ordenadas para su listado público.
      *
      * @param  Builder<Direccion>  $query

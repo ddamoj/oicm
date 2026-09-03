@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\DocumentoDescargaController;
+use App\Http\Controllers\EstradoDescargaController;
+use App\Http\Controllers\InstitucionalController;
 use App\Http\Controllers\NoticiaController;
 use App\Models\Noticia;
 use Illuminate\Support\Facades\Route;
@@ -22,9 +24,6 @@ Route::get('/', function () {
 
 foreach (
     [
-        'quienes-somos' => 'Quiénes somos',
-        'normatividad' => 'Normatividad',
-        'direcciones' => 'Direcciones',
         'galeria' => 'Galería',
         'contacto' => 'Contacto',
     ] as $ruta => $titulo
@@ -33,6 +32,25 @@ foreach (
         return view('publico.en-construccion', ['titulo' => $titulo]);
     })->name($ruta);
 }
+
+// Información institucional, normatividad y direcciones (Fase 7, RF-INS), sin autenticación.
+Route::get('/quienes-somos', [InstitucionalController::class, 'quienesSomos'])->name('quienes-somos');
+Route::get('/direcciones', [InstitucionalController::class, 'listaDirecciones'])->name('direcciones');
+Route::get('/direcciones/{direccion:clave}', [InstitucionalController::class, 'direccion'])->name('direcciones.mostrar');
+
+Route::get('/normatividad', function () {
+    return view('publico.normatividad');
+})->name('normatividad');
+
+// Estrados digitales de la DRACS (Fase 7): consulta y descarga sin autenticación,
+// con el mismo throttle de descarga que el repositorio de documentos (Fase 4).
+Route::get('/estrados', function () {
+    return view('publico.estrados');
+})->name('estrados');
+
+Route::get('/estrados/{estrado}/descargar', EstradoDescargaController::class)
+    ->name('estrados.descargar')
+    ->middleware('throttle:30,1');
 
 // Repositorio público de documentos (Fase 4, RF-DES-001/002): consulta y
 // descarga sin autenticación. La descarga se limita con throttle para
@@ -93,6 +111,19 @@ Route::middleware([
         Route::get('/enlaces', function () {
             return view('admin.enlaces');
         })->name('enlaces');
+
+        // Contenido institucional, normatividad y estrados digitales (Fase 7).
+        Route::get('/paginas', function () {
+            return view('admin.paginas');
+        })->name('paginas');
+
+        Route::get('/normatividad', function () {
+            return view('admin.normatividad');
+        })->name('normatividad');
+
+        Route::get('/estrados', function () {
+            return view('admin.estrados');
+        })->name('estrados');
     });
 
     // Usuarios y bitácora: exclusivos del rol "administrador" (RF-USR-001).

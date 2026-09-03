@@ -23,12 +23,19 @@
         </select>
     </div>
 
+    @if ($direccionActiva)
+        <div class="mb-6 flex items-center justify-between gap-4 rounded-lg bg-primario-claro px-4 py-3 text-sm text-primario-oscuro">
+            <span>Mostrando documentos de <strong>{{ $direccionActiva->nombre }}</strong>.</span>
+            <button type="button" wire:click="limpiarFiltros" class="font-semibold underline">Quitar filtro</button>
+        </div>
+    @endif
+
     @if ($documentos->isEmpty())
         <x-vacio
             titulo="Sin documentos que coincidan"
             descripcion="No encontramos documentos con esa búsqueda o categoría. Ajusta los filtros e intenta de nuevo."
         >
-            @if ($busqueda !== '' || $filtroCategoria !== '')
+            @if ($busqueda !== '' || $filtroCategoria !== '' || $filtroDireccion !== '')
                 <x-boton wire:click="limpiarFiltros" variante="secundario">Quitar filtros</x-boton>
             @endif
         </x-vacio>

@@ -101,6 +101,18 @@ class Documento extends Model
     }
 
     /**
+     * Filtra documentos por dirección responsable (Fase 7: enlace desde la
+     * ficha de cada Dirección al repositorio de documentos).
+     *
+     * @param  Builder<Documento>  $query
+     * @return Builder<Documento>
+     */
+    public function scopePorDireccion(Builder $query, int $direccionId): Builder
+    {
+        return $query->where('direccion_id', $direccionId);
+    }
+
+    /**
      * Búsqueda de documentos por palabra clave en nombre o descripción (RF-DES-002).
      *
      * @param  Builder<Documento>  $query
