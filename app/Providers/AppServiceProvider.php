@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\User;
+use Illuminate\Foundation\Vite;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->definirCompuertasDeAcceso();
+
+        // Nonce de CSP por petición (Fase 9): @vite y @livewireScripts lo
+        // adjuntan solos a las etiquetas <script> que generan.
+        $this->app->make(Vite::class)->useCspNonce();
     }
 
     /**

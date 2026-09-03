@@ -51,19 +51,17 @@
             </div>
         </div>
 
-        {{-- Mensajería del módulo de autenticación vía SweetAlert2 (nunca alertas Blade sueltas) --}}
+        {{-- Mensajería del módulo de autenticación vía SweetAlert2 (nunca alertas Blade
+             sueltas). El mensaje viaja en atributos data-* porque, desde la Fase 9, la
+             Content-Security-Policy no admite <script> inline: resources/js/app.js lo
+             lee en DOMContentLoaded y despacha la alerta correspondiente. --}}
         @if ($errors->any() || session('status'))
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    @if ($errors->any())
-                        window.alertas.error(@json($errors->first()), 'Revisa los datos');
-                    @endif
-
-                    @if (session('status'))
-                        window.alertas.exito(@json(session('status')));
-                    @endif
-                });
-            </script>
+            <div
+                id="mensajes-autenticacion"
+                hidden
+                @if ($errors->any()) data-error="{{ $errors->first() }}" @endif
+                @if (session('status')) data-status="{{ session('status') }}" @endif
+            ></div>
         @endif
 
         @stack('modals')

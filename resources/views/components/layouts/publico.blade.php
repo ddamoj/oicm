@@ -171,9 +171,14 @@
                     </div>
                 </div>
 
+                {{-- Barra legal (Fase 9): fuera de \App\Support\NavegacionPublica porque ese
+                     helper también alimenta el menú principal del header. --}}
                 <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-xs text-white/60 sm:flex-row">
                     <p>&copy; {{ now()->year }} Municipio de Oaxaca de Juárez · Órgano Interno de Control Municipal</p>
-                    <p>Gobierno Municipal 2025-2027</p>
+                    <div class="flex items-center gap-4">
+                        <a href="{{ route('aviso-privacidad') }}" class="hover:text-white">Aviso de privacidad</a>
+                        <p>Gobierno Municipal 2025-2027</p>
+                    </div>
                 </div>
             </div>
         </footer>

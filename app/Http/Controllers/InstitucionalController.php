@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CategoriaEnlace;
 use App\Models\Departamento;
 use App\Models\Direccion;
 use App\Models\PaginaInstitucional;
@@ -50,6 +51,24 @@ class InstitucionalController extends Controller
             'direccion' => $direccion,
             'pagina' => $pagina,
             'departamentos' => Departamento::query()->where('direccion_id', $direccion->id)->activos()->get(),
+        ]);
+    }
+
+    /**
+     * Aviso de privacidad (Fase 9): el micrositio no redacta un aviso propio,
+     * enlaza los que el municipio ya publica por proceso para la Contraloría
+     * Interna Municipal (nombre con el que aparece el OICM en ese portal), vía
+     * el mismo módulo de Enlaces de la Fase 6.
+     */
+    public function avisoPrivacidad(): View
+    {
+        $categoria = CategoriaEnlace::query()
+            ->where('clave', 'avisos-privacidad')
+            ->with(['enlaces' => fn ($consulta) => $consulta->publicado()])
+            ->first();
+
+        return view('publico.aviso-privacidad', [
+            'avisos' => $categoria?->enlaces ?? collect(),
         ]);
     }
 }

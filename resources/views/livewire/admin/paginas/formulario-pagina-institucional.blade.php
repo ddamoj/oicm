@@ -28,7 +28,7 @@
                     x-init="iniciar()"
                     class="rounded-lg border border-borde bg-superficie"
                 >
-                    <div x-ref="editor" style="min-height: 320px;"></div>
+                    <div x-ref="editor" class="min-h-[320px]"></div>
                 </div>
                 @error('contenido') <p class="mt-1 text-xs text-error">{{ $message }}</p> @enderror
             </div>

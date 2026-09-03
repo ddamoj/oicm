@@ -102,6 +102,69 @@ class EnlaceSeeder extends Seeder
                 'url' => 'https://imco.org.mx/',
                 'orden' => 3,
             ],
+            // Avisos de privacidad oficiales (Fase 9): el municipio los publica por
+            // proceso bajo "Contraloría Interna Municipal" en su portal de
+            // transparencia. Transcritos de
+            // https://transparencia.municipiodeoaxaca.gob.mx/aviso-de-privacidad/areas
+            // el 03/09/2026 — pendiente de confirmación por el cliente antes de
+            // publicar, mismo tratamiento que las URLs share.google de la Fase 6:
+            // si el municipio rota el año del expediente el enlace puede caducar.
+            [
+                'categoria' => 'avisos-privacidad',
+                'nombre' => 'Sistema de Control Interno',
+                'descripcion' => 'Aviso de privacidad del proceso de Sistema de Control Interno del OICM.',
+                'url' => 'https://transparencia.municipiodeoaxaca.gob.mx/docs/avisos/2025/2.%20OICM.AVS-Sistema%20de%20Control%20Interno.docx',
+                'orden' => 1,
+            ],
+            [
+                'categoria' => 'avisos-privacidad',
+                'nombre' => 'Padrón de Contratistas',
+                'descripcion' => 'Aviso de privacidad del proceso de Padrón de Contratistas del OICM.',
+                'url' => 'https://transparencia.municipiodeoaxaca.gob.mx/docs/avisos/2026/6.OICM.AVS-Padron%20de%20Contratistas.docx',
+                'orden' => 2,
+            ],
+            [
+                'categoria' => 'avisos-privacidad',
+                'nombre' => 'Actas de Entrega-Recepción',
+                'descripcion' => 'Aviso de privacidad del proceso de Actas de Entrega del Órgano Interno de Control.',
+                'url' => 'https://transparencia.municipiodeoaxaca.gob.mx/docs/avisos/2025/AVISO%20ORGANO%20INTERNO%20DE%20CONTROL%20ACTAS%20DE%20ENTEGA.docx',
+                'orden' => 3,
+            ],
+            [
+                'categoria' => 'avisos-privacidad',
+                'nombre' => 'Dirección de Auditoría Interna',
+                'descripcion' => 'Aviso de privacidad de la Dirección de Auditoría Interna.',
+                'url' => 'https://transparencia.municipiodeoaxaca.gob.mx/docs/avisos/2026/AVISO%20DIR.%20AUDITORIA%20INTERNA%20(CONTRALORIA).docx',
+                'orden' => 4,
+            ],
+            [
+                'categoria' => 'avisos-privacidad',
+                'nombre' => 'Dirección de Quejas, Denuncias e Investigación',
+                'descripcion' => 'Aviso de privacidad de la Dirección de Quejas, Denuncias e Investigación (DQDISP).',
+                'url' => 'https://transparencia.municipiodeoaxaca.gob.mx/docs/avisos/2026/AVISO%20DIR.%20QUEJAS.DENUNCIAS.INVESTIGACION%20(CONTRALORIA).docx',
+                'orden' => 5,
+            ],
+            [
+                'categoria' => 'avisos-privacidad',
+                'nombre' => 'Dirección de Responsabilidades Administrativas',
+                'descripcion' => 'Aviso de privacidad de la Dirección de Responsabilidades Administrativas (DRACS).',
+                'url' => 'https://transparencia.municipiodeoaxaca.gob.mx/docs/avisos/2026/AVISO%20DIR.%20RESPONSABILIDADES%20ADMTVAS%20(CONTRALORIA).docx',
+                'orden' => 6,
+            ],
+            [
+                'categoria' => 'avisos-privacidad',
+                'nombre' => 'Dirección de Control y Mejora de la Gestión Pública Municipal',
+                'descripcion' => 'Aviso de privacidad de la Dirección de Control y Mejora de la Gestión Pública Municipal (DCyMGPM).',
+                'url' => 'https://transparencia.municipiodeoaxaca.gob.mx/docs/avisos/2026/AVISO%20DIR%20CONTROL%20Y%20MEJORA%20(CONTRALORIA).docx',
+                'orden' => 7,
+            ],
+            [
+                'categoria' => 'avisos-privacidad',
+                'nombre' => 'Quejas, Denuncias y Situación Patrimonial',
+                'descripcion' => 'Aviso de privacidad del proceso de Quejas, Denuncias y Situación Patrimonial.',
+                'url' => 'https://transparencia.municipiodeoaxaca.gob.mx/docs/avisos/2026/DIR.%20QUEJAS%2C%20DENUNCIAS%20Y%20SITUACI%C3%93N%20PAT%20(CONTRALORIA).docx',
+                'orden' => 8,
+            ],
         ];
 
         foreach ($enlaces as $enlace) {

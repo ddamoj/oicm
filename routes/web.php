@@ -48,6 +48,10 @@ Route::get('/quienes-somos', [InstitucionalController::class, 'quienesSomos'])->
 Route::get('/direcciones', [InstitucionalController::class, 'listaDirecciones'])->name('direcciones');
 Route::get('/direcciones/{direccion:clave}', [InstitucionalController::class, 'direccion'])->name('direcciones.mostrar');
 
+// Aviso de privacidad (Fase 9): enlaza los avisos oficiales del municipio, sin
+// autenticación.
+Route::get('/aviso-de-privacidad', [InstitucionalController::class, 'avisoPrivacidad'])->name('aviso-privacidad');
+
 Route::get('/normatividad', function () {
     return view('publico.normatividad');
 })->name('normatividad');

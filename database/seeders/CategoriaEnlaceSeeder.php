@@ -25,6 +25,11 @@ class CategoriaEnlaceSeeder extends Seeder
             ['clave' => 'normativa', 'nombre' => 'Normativa', 'orden' => 7],
             ['clave' => 'padron-contratistas', 'nombre' => 'Padrón de contratistas', 'orden' => 8],
             ['clave' => 'dependencias', 'nombre' => 'Dependencias', 'orden' => 9],
+            // Añadida en la Fase 9 (endurecimiento y cumplimiento de protección de
+            // datos): el micrositio no redacta avisos de privacidad propios, enlaza
+            // los que el municipio ya publica por proceso para la Contraloría
+            // Interna Municipal (nombre con el que aparece el OICM en ese portal).
+            ['clave' => 'avisos-privacidad', 'nombre' => 'Avisos de privacidad', 'orden' => 10],
         ];
 
         foreach ($categorias as $categoria) {

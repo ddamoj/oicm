@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CabecerasSeguridad;
 use App\Http\Middleware\VerificarCuentaActiva;
 use App\Http\Middleware\VerificarRol;
 use Illuminate\Foundation\Application;
@@ -19,6 +20,11 @@ return Application::configure(basePath: dirname(__DIR__))
             'rol' => VerificarRol::class,
             'cuenta.activa' => VerificarCuentaActiva::class,
         ]);
+
+        // Cabeceras de seguridad (Fase 9) en toda respuesta web: CSP, HSTS,
+        // X-Frame-Options, etc. Se aplica globalmente para no depender de que
+        // cada ruta nueva la declare por separado.
+        $middleware->web(append: [CabecerasSeguridad::class]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

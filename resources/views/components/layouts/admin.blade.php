@@ -113,11 +113,7 @@
         @stack('modals')
         @livewireScripts
 
-        {{-- Puente único entre acciones Livewire y SweetAlert2: cualquier componente
-             administrativo puede notificar al usuario despachando estos eventos. --}}
-        <script>
-            window.addEventListener('mostrar-exito', (evento) => window.alertas.exito(evento.detail.mensaje));
-            window.addEventListener('mostrar-error', (evento) => window.alertas.error(evento.detail.mensaje));
-        </script>
+        {{-- El puente entre eventos Livewire y SweetAlert2 vive en resources/js/app.js
+             desde la Fase 9: la Content-Security-Policy no admite <script> inline. --}}
     </body>
 </html>

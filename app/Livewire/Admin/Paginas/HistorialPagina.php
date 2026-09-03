@@ -47,6 +47,14 @@ class HistorialPagina extends Component
         try {
             $version = PaginaInstitucionalVersion::query()->findOrFail($versionId);
             $pagina = PaginaInstitucional::query()->findOrFail($this->paginaId);
+
+            // Endurecimiento (Fase 9): la versión debe pertenecer a la página
+            // que el historial tiene abierta, para que un ID de versión ajeno
+            // no pueda restaurarse sobre otra página institucional.
+            if ($version->pagina_institucional_id !== $pagina->id) {
+                abort(404);
+            }
+
             $usuario = auth()->user();
 
             $versionador->restaurar($pagina, $version, $usuario);

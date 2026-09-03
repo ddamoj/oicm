@@ -7,6 +7,6 @@
     <div class="cargando-shimmer h-6 w-2/3 rounded-md"></div>
 
     @for ($i = 0; $i < $lineas; $i++)
-        <div class="cargando-shimmer h-4 rounded-md" style="width: {{ $i === $lineas - 1 ? '45%' : '100%' }}"></div>
+        <div class="cargando-shimmer h-4 rounded-md {{ $i === $lineas - 1 ? 'w-[45%]' : 'w-full' }}"></div>
     @endfor
 </div>
