@@ -60,6 +60,18 @@ return [
             'report' => false,
         ],
 
+        // Almacenamiento de documentos públicos (Fase 4, RF-CAR-001/002/003): fuera de
+        // la raíz web ("serve" en false) y sin visibilidad pública. Toda descarga pasa
+        // obligatoriamente por DocumentoDescargaController, nunca por URL directa.
+        'documentos' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private/documentos'),
+            'serve' => false,
+            'visibility' => 'private',
+            'throw' => false,
+            'report' => false,
+        ],
+
     ],
 
     /*

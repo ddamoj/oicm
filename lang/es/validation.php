@@ -201,6 +201,11 @@ return [
         'current_password' => 'contraseña actual',
         'rolId' => 'rol',
         'remember' => 'recordar sesión',
+        'nombre' => 'nombre',
+        'descripcion' => 'descripción',
+        'categoriaDocumentoId' => 'categoría',
+        'direccionId' => 'dirección',
+        'archivo' => 'archivo',
     ],
 
 ];
