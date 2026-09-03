@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\DocumentoDescargaController;
+use App\Http\Controllers\NoticiaController;
+use App\Models\Noticia;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +14,10 @@ use Illuminate\Support\Facades\Route;
 | la navegación con una vista "en construcción" para poder verificarlos.
 */
 Route::get('/', function () {
-    return view('publico.inicio');
+    // Últimas 3 noticias publicadas (Fase 5, RF-NOT-002) para la portada.
+    return view('publico.inicio', [
+        'ultimasNoticias' => Noticia::query()->publicado()->limit(3)->get(),
+    ]);
 })->name('inicio');
 
 foreach (
@@ -20,7 +25,6 @@ foreach (
         'quienes-somos' => 'Quiénes somos',
         'normatividad' => 'Normatividad',
         'direcciones' => 'Direcciones',
-        'noticias' => 'Noticias',
         'galeria' => 'Galería',
         'enlaces' => 'Enlaces de interés',
         'contacto' => 'Contacto',
@@ -42,6 +46,13 @@ Route::get('/documentos/{documento}/descargar', DocumentoDescargaController::cla
     ->name('documentos.descargar')
     ->middleware('throttle:30,1');
 
+// Noticias, avisos y comunicados (Fase 5, RF-NOT-001/002/003), sin autenticación.
+Route::get('/noticias', function () {
+    return view('publico.noticias');
+})->name('noticias');
+
+Route::get('/noticias/{noticia:slug}', [NoticiaController::class, 'show'])->name('noticias.mostrar');
+
 /*
 |--------------------------------------------------------------------------
 | Rutas administrativas
@@ -62,7 +73,6 @@ Route::middleware([
 
     foreach (
         [
-            'noticias' => 'Noticias',
             'enlaces' => 'Enlaces',
         ] as $ruta => $titulo
     ) {
@@ -75,11 +85,16 @@ Route::middleware([
         return view('admin.perfil');
     })->name('perfil');
 
-    // Documentos: administrador y administrador de contenido (RF-CAR-001/002/003).
+    // Documentos y noticias: administrador y administrador de contenido
+    // (RF-CAR-001/002/003, RF-NOT-001/002/003).
     Route::middleware('rol:administrador,administrador_contenido')->group(function () {
         Route::get('/documentos', function () {
             return view('admin.documentos');
         })->name('documentos');
+
+        Route::get('/noticias', function () {
+            return view('admin.noticias');
+        })->name('noticias');
     });
 
     // Usuarios y bitácora: exclusivos del rol "administrador" (RF-USR-001).

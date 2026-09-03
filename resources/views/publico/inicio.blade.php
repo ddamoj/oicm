@@ -55,9 +55,33 @@
     </x-seccion>
 
     <x-seccion antetitulo="Comunicación institucional" titulo="Últimas noticias" descripcion="Comunicados y avisos publicados por el OICM." :alterna="true">
-        <x-vacio
-            titulo="Aún no hay noticias publicadas"
-            descripcion="En cuanto el OICM publique un comunicado, aparecerá aquí de forma automática."
-        />
+        @if ($ultimasNoticias->isEmpty())
+            <x-vacio
+                titulo="Aún no hay noticias publicadas"
+                descripcion="En cuanto el OICM publique un comunicado, aparecerá aquí de forma automática."
+            />
+        @else
+            <div class="grid gap-6 sm:grid-cols-3">
+                @foreach ($ultimasNoticias as $noticia)
+                    <x-tarjeta wire:key="inicio-noticia-{{ $noticia->id }}" href="{{ route('noticias.mostrar', $noticia) }}" flotante class="!p-0 overflow-hidden">
+                        <div class="aspect-[3/2] w-full overflow-hidden bg-gris-claro">
+                            @if ($noticia->urlMiniatura())
+                                <img src="{{ $noticia->urlMiniatura() }}" alt="{{ $noticia->imagen_alt }}" loading="lazy" class="h-full w-full object-cover">
+                            @endif
+                        </div>
+                        <div class="p-6">
+                            <p class="text-xs font-semibold uppercase tracking-wide text-texto-secundario">
+                                {{ $noticia->publicado_en?->translatedFormat('d \d\e F \d\e Y') }}
+                            </p>
+                            <h3 class="mt-2 text-lg font-bold tracking-tight text-texto">{{ $noticia->titulo }}</h3>
+                        </div>
+                    </x-tarjeta>
+                @endforeach
+            </div>
+
+            <div class="mt-8 text-center">
+                <x-boton href="{{ route('noticias') }}" variante="secundario">Ver todas las noticias</x-boton>
+            </div>
+        @endif
     </x-seccion>
 </x-layouts.publico>

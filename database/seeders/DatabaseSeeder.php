@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             NormatividadSeeder::class,
             EnlaceSeeder::class,
             UsuarioSeeder::class,
+            NoticiaSeeder::class,
         ]);
     }
 }
