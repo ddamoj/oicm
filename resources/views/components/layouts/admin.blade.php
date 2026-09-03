@@ -79,9 +79,29 @@
 
                 <h1 class="text-lg font-semibold text-texto">{{ $titulo ?? 'Panel de administración' }}</h1>
 
-                <div class="flex items-center gap-3">
-                    <span class="hidden text-sm text-texto-secundario sm:block">{{ auth()->user()?->name }}</span>
-                    <x-badge variante="primario">{{ auth()->user()?->rol?->nombre ?? 'Sin rol' }}</x-badge>
+                <div class="flex items-center gap-2">
+                    <a
+                        href="{{ route('admin.perfil') }}"
+                        class="flex items-center gap-2 rounded-full px-2 py-1.5 hover:bg-primario-claro
+                               {{ request()->routeIs('admin.perfil') ? 'bg-primario-claro' : '' }}"
+                    >
+                        <span class="hidden text-sm text-texto-secundario sm:block">{{ auth()->user()?->name }}</span>
+                        <x-badge variante="primario">{{ auth()->user()?->rol?->nombre ?? 'Sin rol' }}</x-badge>
+                    </a>
+
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button
+                            type="submit"
+                            class="rounded-full p-2 text-texto-secundario hover:bg-gris-claro hover:text-texto"
+                            aria-label="Cerrar sesión"
+                            title="Cerrar sesión"
+                        >
+                            <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0110.5 3h6a2.25 2.25 0 012.25 2.25v13.5A2.25 2.25 0 0116.5 21h-6a2.25 2.25 0 01-2.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+                            </svg>
+                        </button>
+                    </form>
                 </div>
             </header>
 
@@ -92,5 +112,12 @@
 
         @stack('modals')
         @livewireScripts
+
+        {{-- Puente único entre acciones Livewire y SweetAlert2: cualquier componente
+             administrativo puede notificar al usuario despachando estos eventos. --}}
+        <script>
+            window.addEventListener('mostrar-exito', (evento) => window.alertas.exito(evento.detail.mensaje));
+            window.addEventListener('mostrar-error', (evento) => window.alertas.error(evento.detail.mensaje));
+        </script>
     </body>
 </html>

@@ -26,6 +26,7 @@ class NavegacionAdmin
         $iconoNoticias = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5A3.375 3.375 0 0010.125 2.25H8.25M9 12h6m-6 3.75h6M5.25 21h13.5A2.25 2.25 0 0021 18.75V7.5l-6-5.25H5.25A2.25 2.25 0 003 4.5v14.25A2.25 2.25 0 005.25 21z" /></svg>';
         $iconoEnlaces = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg>';
         $iconoUsuarios = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0112.75 0zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM19.5 9.75a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" /></svg>';
+        $iconoBitacora = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 3.75h6M9 4.5v.75m6-.75v.75M6.75 6h10.5A2.25 2.25 0 0119.5 8.25v10.5a2.25 2.25 0 01-2.25 2.25H6.75a2.25 2.25 0 01-2.25-2.25V8.25A2.25 2.25 0 016.75 6z" /></svg>';
 
         $comunes = [
             'Panel principal' => ['ruta' => 'admin.panel', 'icono' => $iconoTablero],
@@ -34,9 +35,10 @@ class NavegacionAdmin
             'Enlaces' => ['ruta' => 'admin.enlaces', 'icono' => $iconoEnlaces],
         ];
 
-        // Solo el rol "administrador" gestiona usuarios, roles y catálogos del sistema.
+        // Solo el rol "administrador" gestiona usuarios, roles, catálogos y la bitácora del sistema.
         if ($usuario->tieneRol('administrador')) {
             $comunes['Usuarios'] = ['ruta' => 'admin.usuarios', 'icono' => $iconoUsuarios];
+            $comunes['Bitácora'] = ['ruta' => 'admin.bitacora', 'icono' => $iconoBitacora];
         }
 
         return $comunes;

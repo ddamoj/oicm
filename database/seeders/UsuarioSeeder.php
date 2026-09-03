@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Hash;
 class UsuarioSeeder extends Seeder
 {
     /**
+     * Contraseña de las cuentas de prueba: cumple la política de la Fase 3
+     * (10+ caracteres, mayúsculas, minúsculas, números y símbolos).
+     */
+    private const CONTRASENA_PRUEBA = 'Oicm#Control2026';
+
+    /**
      * Crea usuarios de prueba para cada rol administrativo, útiles para el
      * desarrollo local y las pruebas manuales de la Fase 3 (autenticación).
      */
@@ -22,7 +28,7 @@ class UsuarioSeeder extends Seeder
             ['email' => 'administrador@oicm.oaxacadejuarez.gob.mx'],
             [
                 'name' => 'Administrador OICM',
-                'password' => Hash::make('password'),
+                'password' => Hash::make(self::CONTRASENA_PRUEBA),
                 'email_verified_at' => now(),
                 'rol_id' => $rolAdministrador?->id,
                 'activo' => true,
@@ -33,7 +39,7 @@ class UsuarioSeeder extends Seeder
             ['email' => 'contenido@oicm.oaxacadejuarez.gob.mx'],
             [
                 'name' => 'Administrador de Contenido OICM',
-                'password' => Hash::make('password'),
+                'password' => Hash::make(self::CONTRASENA_PRUEBA),
                 'email_verified_at' => now(),
                 'rol_id' => $rolAdministradorContenido?->id,
                 'activo' => true,

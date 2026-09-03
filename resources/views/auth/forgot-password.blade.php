@@ -1,34 +1,33 @@
-<x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+<x-layouts.autenticacion titulo="Recuperar contraseña">
+    <p class="antetitulo">Recuperar acceso</p>
+    <h2 class="mt-2 text-2xl font-bold tracking-tight text-texto">¿Olvidaste tu contraseña?</h2>
+    <p class="mt-2 text-sm text-texto-secundario">
+        Escribe tu correo institucional y te enviaremos un enlace para elegir una nueva contraseña.
+    </p>
 
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+    <form method="POST" action="{{ route('password.email') }}" class="mt-8 space-y-5">
+        @csrf
+
+        <div>
+            <label for="email" class="mb-1.5 block text-sm font-semibold text-texto">Correo institucional</label>
+            <input
+                id="email"
+                type="email"
+                name="email"
+                value="{{ old('email') }}"
+                required
+                autofocus
+                autocomplete="username"
+                class="w-full rounded-lg border border-borde bg-superficie px-4 py-3 text-sm text-texto
+                       placeholder:text-gris focus:border-primario focus:outline-none focus:ring-2 focus:ring-acento-oscuro"
+                placeholder="nombre@oicm.oaxacadejuarez.gob.mx"
+            >
         </div>
 
-        @session('status')
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ $value }}
-            </div>
-        @endsession
+        <x-boton tipo="submit" class="w-full">Enviar enlace de recuperación</x-boton>
 
-        <x-validation-errors class="mb-4" />
-
-        <form method="POST" action="{{ route('password.email') }}">
-            @csrf
-
-            <div class="block">
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <x-button>
-                    {{ __('Email Password Reset Link') }}
-                </x-button>
-            </div>
-        </form>
-    </x-authentication-card>
-</x-guest-layout>
+        <p class="text-center text-sm">
+            <a href="{{ route('login') }}" class="font-semibold text-primario hover:underline">← Volver a iniciar sesión</a>
+        </p>
+    </form>
+</x-layouts.autenticacion>

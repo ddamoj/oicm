@@ -35,13 +35,15 @@ foreach (
 |--------------------------------------------------------------------------
 | Rutas administrativas
 |--------------------------------------------------------------------------
-| Requieren sesión autenticada. El CRUD real de cada módulo se construye en
-| las fases 3 a 6; aquí se deja el layout de administración navegable.
+| Requieren sesión autenticada y cuenta activa (revocación inmediata de
+| acceso, RF-USR-001). El CRUD real de cada módulo se construye en las
+| fases 3 a 6; aquí se deja el layout de administración navegable.
 */
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    'cuenta.activa',
 ])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', function () {
         return view('admin.en-construccion', ['titulo' => 'Panel principal']);
@@ -52,13 +54,27 @@ Route::middleware([
             'documentos' => 'Documentos',
             'noticias' => 'Noticias',
             'enlaces' => 'Enlaces',
-            'usuarios' => 'Usuarios',
         ] as $ruta => $titulo
     ) {
         Route::get("/{$ruta}", function () use ($titulo) {
             return view('admin.en-construccion', ['titulo' => $titulo]);
         })->name($ruta);
     }
+
+    Route::get('/perfil', function () {
+        return view('admin.perfil');
+    })->name('perfil');
+
+    // Usuarios y bitácora: exclusivos del rol "administrador" (RF-USR-001).
+    Route::middleware('rol:administrador')->group(function () {
+        Route::get('/usuarios', function () {
+            return view('admin.usuarios');
+        })->name('usuarios');
+
+        Route::get('/bitacora', function () {
+            return view('admin.bitacora');
+        })->name('bitacora');
+    });
 });
 
 Route::middleware([

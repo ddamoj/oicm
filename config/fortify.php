@@ -162,19 +162,22 @@ return [
     */
 
     'features' => [
-        Features::registration(),
+        // Registro público desactivado: el alta de usuarios administrativos
+        // es exclusiva del rol "administrador" vía el CRUD de la Fase 3.
+        // Features::registration(),
         Features::resetPasswords(),
         // Features::emailVerification(),
         Features::updateProfileInformation(),
         Features::updatePasswords(),
-        Features::twoFactorAuthentication([
-            'confirm' => true,
-            'confirmPassword' => true,
-            // 'window' => 0,
-        ]),
-        Features::passkeys([
-            'confirmPassword' => true,
-        ]),
+        // 2FA y passkeys quedan fuera de alcance de la Fase 3; se reevalúan en F9 (seguridad).
+        // Features::twoFactorAuthentication([
+        //     'confirm' => true,
+        //     'confirmPassword' => true,
+        //     // 'window' => 0,
+        // ]),
+        // Features::passkeys([
+        //     'confirmPassword' => true,
+        // ]),
     ],
 
 ];

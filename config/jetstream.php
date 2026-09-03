@@ -62,7 +62,9 @@ return [
         // Features::profilePhotos(),
         // Features::api(),
         // Features::teams(['invitations' => true]),
-        Features::accountDeletion(),
+        // Borrado de cuenta propia desactivado: la baja de usuarios (desactivar/eliminar)
+        // es exclusiva del rol "administrador" vía el CRUD de la Fase 3.
+        // Features::accountDeletion(),
     ],
 
     /*
