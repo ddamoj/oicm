@@ -17,7 +17,7 @@
         <a href="#contenido-principal" class="saltar-contenido">Saltar al contenido principal</a>
 
         <header class="sticky top-0 z-40 border-b border-borde bg-white/90 backdrop-blur">
-            <div x-data="{ menuAbierto: false }" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div x-data="{ menuAbierto: false, buscadorAbierto: false }" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="flex h-18 items-center justify-between gap-4 py-3">
                     <a href="{{ route('inicio') }}" class="flex shrink-0 items-center gap-3">
                         <img src="{{ asset('assets/sitio/images/logo-verde-horizontal.png') }}" alt="Municipio de Oaxaca de Juárez" class="h-9 w-auto">
@@ -48,6 +48,20 @@
                     </nav>
 
                     <div class="flex shrink-0 items-center gap-2">
+                        {{-- Botón de búsqueda global (Fase 8) --}}
+                        <button
+                            type="button"
+                            x-on:click="buscadorAbierto = !buscadorAbierto"
+                            class="rounded-full p-2.5 text-primario hover:bg-primario-claro"
+                            :aria-expanded="buscadorAbierto.toString()"
+                            aria-controls="buscador-global-panel"
+                            aria-label="Buscar en el micrositio"
+                        >
+                            <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+
                         <x-boton href="{{ route('login') }}" variante="secundario" tamano="sm" class="hidden sm:inline-flex">
                             Acceso institucional
                         </x-boton>
@@ -97,6 +111,20 @@
                         </li>
                     </ul>
                 </nav>
+
+                {{-- Panel de búsqueda global desplegable (Fase 8) --}}
+                <div
+                    id="buscador-global-panel"
+                    x-show="buscadorAbierto"
+                    x-cloak
+                    x-on:keydown.escape.window="buscadorAbierto = false"
+                    x-transition:enter="ease-institucional duration-200"
+                    x-transition:enter-start="opacity-0 -translate-y-2"
+                    x-transition:enter-end="opacity-100 translate-y-0"
+                    class="border-t border-borde py-4"
+                >
+                    <x-buscador accion="{{ route('buscar') }}" parametro="q" marcador="Buscar noticias, documentos, normatividad…" etiqueta="Buscar en el micrositio" />
+                </div>
             </div>
         </header>
 

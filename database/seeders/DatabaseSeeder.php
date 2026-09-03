@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
             UsuarioSeeder::class,
             NoticiaSeeder::class,
             PaginaInstitucionalSeeder::class,
+            GaleriaSeeder::class,
+            ContactoSeeder::class,
         ]);
     }
 }

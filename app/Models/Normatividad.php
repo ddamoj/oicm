@@ -57,4 +57,19 @@ class Normatividad extends Model
     {
         return $query->where('ambito', $ambito);
     }
+
+    /**
+     * Busca por título, descripción o medio de publicación (buscador global, Fase 8).
+     *
+     * @param  Builder<Normatividad>  $query
+     * @return Builder<Normatividad>
+     */
+    public function scopeBuscar(Builder $query, string $palabraClave): Builder
+    {
+        return $query->where(function (Builder $q) use ($palabraClave) {
+            $q->where('titulo', 'like', "%{$palabraClave}%")
+                ->orWhere('descripcion', 'like', "%{$palabraClave}%")
+                ->orWhere('medio_publicacion', 'like', "%{$palabraClave}%");
+        });
+    }
 }

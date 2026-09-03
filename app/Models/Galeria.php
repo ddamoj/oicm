@@ -48,4 +48,15 @@ class Galeria extends Model
     {
         return $query->where('publicada', true)->orderByDesc('fecha_evento');
     }
+
+    /**
+     * Primer medio (por orden) usado como portada en el grid público.
+     * Null-safety: null si la galería aún no tiene medios cargados.
+     */
+    public function portada(): ?GaleriaMedio
+    {
+        return $this->relationLoaded('medios')
+            ? $this->medios->sortBy('orden')->first()
+            : $this->medios()->orderBy('orden')->first();
+    }
 }

@@ -28,6 +28,7 @@ class EnlaceSeeder extends Seeder
                 'descripcion' => 'Sistema de declaración patrimonial del Municipio de Oaxaca de Juárez.',
                 'url' => 'https://declaraciones.municipiodeoaxaca.gob.mx/public/',
                 'orden' => 1,
+                'destacado_inicio' => true,
             ],
             [
                 'categoria' => 'control-interno',
@@ -35,6 +36,7 @@ class EnlaceSeeder extends Seeder
                 'descripcion' => 'Sistema de evaluación del control interno de la administración pública municipal.',
                 'url' => 'https://inspectores.municipiodeoaxaca.gob.mx/EvaluacionSist/Login.php',
                 'orden' => 1,
+                'destacado_inicio' => true,
             ],
             [
                 'categoria' => 'entrega-recepcion',
@@ -42,6 +44,7 @@ class EnlaceSeeder extends Seeder
                 'descripcion' => 'Portal de entrega-recepción de la administración pública municipal y de puestos.',
                 'url' => 'https://transparencia.municipiodeoaxaca.gob.mx/entrega-recepcion',
                 'orden' => 1,
+                'destacado_inicio' => true,
             ],
             [
                 'categoria' => 'organismos-fiscalizadores',
@@ -110,6 +113,7 @@ class EnlaceSeeder extends Seeder
                     'url' => $enlace['url'],
                     'orden' => $enlace['orden'],
                     'activo' => true,
+                    'destacado_inicio' => $enlace['destacado_inicio'] ?? false,
                 ]
             );
         }

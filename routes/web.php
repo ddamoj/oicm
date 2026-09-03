@@ -1,9 +1,14 @@
 <?php
 
+use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\DocumentoDescargaController;
 use App\Http\Controllers\EstradoDescargaController;
+use App\Http\Controllers\GaleriaController;
 use App\Http\Controllers\InstitucionalController;
 use App\Http\Controllers\NoticiaController;
+use App\Models\Documento;
+use App\Models\Enlace;
+use App\Models\Galeria;
 use App\Models\Noticia;
 use Illuminate\Support\Facades\Route;
 
@@ -16,22 +21,27 @@ use Illuminate\Support\Facades\Route;
 | la navegación con una vista "en construcción" para poder verificarlos.
 */
 Route::get('/', function () {
-    // Últimas 3 noticias publicadas (Fase 5, RF-NOT-002) para la portada.
+    // Portada (Fase 8): últimas noticias, documentos recientes y accesos
+    // rápidos marcados por el Administrador de Contenido.
     return view('publico.inicio', [
         'ultimasNoticias' => Noticia::query()->publicado()->limit(3)->get(),
+        'documentosRecientes' => Documento::query()->publicado()->with('categoria')->latest()->limit(4)->get(),
+        'accesosRapidos' => Enlace::query()->publicado()->where('destacado_inicio', true)->get(),
     ]);
 })->name('inicio');
 
-foreach (
-    [
-        'galeria' => 'Galería',
-        'contacto' => 'Contacto',
-    ] as $ruta => $titulo
-) {
-    Route::get("/{$ruta}", function () use ($titulo) {
-        return view('publico.en-construccion', ['titulo' => $titulo]);
-    })->name($ruta);
-}
+// Buscador global del micrositio (Fase 8): consulta varios modelos a la vez,
+// respetando siempre el scopePublicado de cada uno.
+Route::get('/buscar', function () {
+    return view('publico.buscar');
+})->name('buscar')->middleware('throttle:60,1');
+
+// Galería de fotos y videos por evento (Fase 8), sin autenticación.
+Route::get('/galeria', [GaleriaController::class, 'index'])->name('galeria');
+Route::get('/galeria/{galeria}', [GaleriaController::class, 'show'])->name('galeria.mostrar');
+
+// Contacto: directorio, mapa y canal de quejas y denuncias (Fase 8), sin autenticación.
+Route::get('/contacto', ContactoController::class)->name('contacto');
 
 // Información institucional, normatividad y direcciones (Fase 7, RF-INS), sin autenticación.
 Route::get('/quienes-somos', [InstitucionalController::class, 'quienesSomos'])->name('quienes-somos');
@@ -124,6 +134,19 @@ Route::middleware([
         Route::get('/estrados', function () {
             return view('admin.estrados');
         })->name('estrados');
+
+        // Galería y contacto (Fase 8).
+        Route::get('/galerias', function () {
+            return view('admin.galerias');
+        })->name('galerias');
+
+        Route::get('/galerias/{galeria}/medios', function (Galeria $galeria) {
+            return view('admin.galerias-medios', ['galeria' => $galeria]);
+        })->name('galerias.medios');
+
+        Route::get('/contactos', function () {
+            return view('admin.contactos');
+        })->name('contactos');
     });
 
     // Usuarios y bitácora: exclusivos del rol "administrador" (RF-USR-001).

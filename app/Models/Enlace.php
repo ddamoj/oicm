@@ -20,6 +20,7 @@ class Enlace extends Model
         'url',
         'orden',
         'activo',
+        'destacado_inicio',
     ];
 
     protected function casts(): array
@@ -27,6 +28,7 @@ class Enlace extends Model
         return [
             'activo' => 'boolean',
             'orden' => 'integer',
+            'destacado_inicio' => 'boolean',
         ];
     }
 
