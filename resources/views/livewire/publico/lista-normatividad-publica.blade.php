@@ -46,7 +46,7 @@
                     <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                         <div>
                             <x-badge variante="primario">{{ ucfirst($item->ambito) }}</x-badge>
-                            <h3 class="mt-3 text-lg font-bold tracking-tight text-texto">{{ $item->titulo }}</h3>
+                            <h2 class="mt-3 text-lg font-bold tracking-tight text-texto">{{ $item->titulo }}</h2>
                             @if ($item->descripcion)
                                 <p class="mt-1 text-sm leading-relaxed text-texto-secundario">{{ $item->descripcion }}</p>
                             @endif

@@ -20,7 +20,11 @@
     --color-primario-oscuro: #1a423a;
     --color-primario-claro: #e8f0ee;
     --color-acento: #cdde00;
-    --color-acento-oscuro: #a8b800;
+    /* Fase 10: oscurecido de #a8b800 a #656d00 — Lighthouse detectó 2.2:1 de
+       contraste como texto sobre fondos claros (mínimo AA 4.5:1). Se conserva
+       la familia tonal lima/oliva; el valor nuevo da ~5.6:1 sobre blanco y
+       sobre --color-gris-claro, con margen. */
+    --color-acento-oscuro: #656d00;
     --color-blanco: #ffffff;
     --color-gris: #afafaf;
     --color-gris-claro: #f4f4f2;

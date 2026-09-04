@@ -42,11 +42,11 @@ class AlmacenMedioGaleria
 
         try {
             $foto = $this->redimensionar($recurso, self::ANCHO_MAXIMO_FOTO);
-            $rutaArchivo = $this->guardarJpeg($foto, $carpeta, $nombreBase.'.jpg');
+            $rutaArchivo = $this->guardarWebp($foto, $carpeta, $nombreBase.'.webp');
             imagedestroy($foto);
 
             $miniatura = $this->recortar($recurso, self::ANCHO_MINIATURA, self::ALTO_MINIATURA);
-            $rutaMiniatura = $this->guardarJpeg($miniatura, $carpeta, $nombreBase.'-miniatura.jpg');
+            $rutaMiniatura = $this->guardarWebp($miniatura, $carpeta, $nombreBase.'-miniatura.webp');
             imagedestroy($miniatura);
         } finally {
             imagedestroy($recurso);
@@ -150,10 +150,10 @@ class AlmacenMedioGaleria
         return $destino;
     }
 
-    private function guardarJpeg(\GdImage $imagen, string $carpeta, string $nombreArchivo): string
+    private function guardarWebp(\GdImage $imagen, string $carpeta, string $nombreArchivo): string
     {
         $rutaTemporal = tempnam(sys_get_temp_dir(), 'galeria_');
-        imagejpeg($imagen, $rutaTemporal, 85);
+        imagewebp($imagen, $rutaTemporal, 85);
 
         $ruta = $carpeta.'/'.$nombreArchivo;
         Storage::disk($this->disco)->put($ruta, file_get_contents($rutaTemporal));

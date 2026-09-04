@@ -37,11 +37,11 @@ class AlmacenImagenNoticia
 
         try {
             $portada = $this->redimensionar($recurso, self::ANCHO_MAXIMO_PORTADA, null);
-            $rutaPortada = $this->guardarJpeg($portada, $carpeta, $nombreBase.'.jpg');
+            $rutaPortada = $this->guardarWebp($portada, $carpeta, $nombreBase.'.webp');
             imagedestroy($portada);
 
             $miniatura = $this->recortar($recurso, self::ANCHO_MINIATURA, self::ALTO_MINIATURA);
-            $rutaMiniatura = $this->guardarJpeg($miniatura, $carpeta, $nombreBase.'-miniatura.jpg');
+            $rutaMiniatura = $this->guardarWebp($miniatura, $carpeta, $nombreBase.'-miniatura.webp');
             imagedestroy($miniatura);
         } finally {
             imagedestroy($recurso);
@@ -137,10 +137,10 @@ class AlmacenImagenNoticia
         return $destino;
     }
 
-    private function guardarJpeg(\GdImage $imagen, string $carpeta, string $nombreArchivo): string
+    private function guardarWebp(\GdImage $imagen, string $carpeta, string $nombreArchivo): string
     {
         $rutaTemporal = tempnam(sys_get_temp_dir(), 'noticia_');
-        imagejpeg($imagen, $rutaTemporal, 85);
+        imagewebp($imagen, $rutaTemporal, 85);
 
         $ruta = $carpeta.'/'.$nombreArchivo;
         Storage::disk($this->disco)->put($ruta, file_get_contents($rutaTemporal));

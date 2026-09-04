@@ -74,6 +74,13 @@ class GestionGaleriasTest extends TestCase
             'tipo' => 'foto',
             'descripcion_alt' => 'Personas asistentes a la capacitación',
         ]);
+
+        // Fase 10: la foto se recodifica a WebP (menor peso, mejor LCP), nunca se conserva el JPG original.
+        $medio = GaleriaMedio::query()->where('galeria_id', $galeria->id)->firstOrFail();
+        $this->assertStringEndsWith('.webp', $medio->ruta_archivo);
+        $this->assertStringEndsWith('.webp', $medio->ruta_miniatura);
+        $rutaAbsoluta = Storage::disk('public')->path($medio->ruta_archivo);
+        $this->assertSame('image/webp', mime_content_type($rutaAbsoluta));
     }
 
     public function test_rechaza_una_foto_con_extension_no_permitida(): void

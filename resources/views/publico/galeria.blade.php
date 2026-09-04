@@ -33,7 +33,7 @@
                                 {{ $galeria->fecha_evento?->translatedFormat('d \d\e F \d\e Y') ?? 'Sin fecha' }}
                                 · {{ $galeria->medios_count }} {{ Str::plural('archivo', $galeria->medios_count) }}
                             </p>
-                            <h3 class="mt-2 text-lg font-bold tracking-tight text-texto">{{ $galeria->titulo }}</h3>
+                            <h2 class="mt-2 text-lg font-bold tracking-tight text-texto">{{ $galeria->titulo }}</h2>
                             @if ($galeria->descripcion)
                                 <p class="mt-2 text-sm text-texto-secundario">{{ Str::limit($galeria->descripcion, 100) }}</p>
                             @endif

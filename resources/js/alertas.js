@@ -1,30 +1,41 @@
-import Swal from 'sweetalert2';
-
 /**
  * Wrapper único de SweetAlert2 para todo el micrositio del OICM.
  * Centraliza aquí la paleta institucional y el tono de los mensajes para que
  * ninguna vista use alert()/confirm() nativos ni alertas Blade sueltas.
+ *
+ * Fase 10: SweetAlert2 se importa de forma diferida (solo al mostrar la
+ * primera alerta) en vez de al nivel del módulo. La mayoría de las páginas
+ * públicas nunca disparan una alerta durante toda la visita, así que
+ * cargarla por adelantado en el `app.js` compartido solo penalizaba su LCP.
  */
 const COLOR_PRIMARIO = '#265b4d';
-const COLOR_ACENTO = '#cdde00';
 const COLOR_ERROR = '#b3261e';
 
-const alertaBase = Swal.mixin({
-    confirmButtonColor: COLOR_PRIMARIO,
-    cancelButtonColor: '#afafaf',
-    buttonsStyling: true,
-    customClass: {
-        popup: 'font-body',
-        confirmButton: 'font-sans',
-        cancelButton: 'font-sans',
-    },
-});
+let alertaBasePromise = null;
+
+function obtenerAlertaBase() {
+    if (! alertaBasePromise) {
+        alertaBasePromise = import('sweetalert2').then(({ default: Swal }) => Swal.mixin({
+            confirmButtonColor: COLOR_PRIMARIO,
+            cancelButtonColor: '#afafaf',
+            buttonsStyling: true,
+            customClass: {
+                popup: 'font-body',
+                confirmButton: 'font-sans',
+                cancelButton: 'font-sans',
+            },
+        }));
+    }
+
+    return alertaBasePromise;
+}
 
 /**
  * Aviso corto y no bloqueante en la esquina de la pantalla (p. ej. "Guardado").
  */
-export function toast(mensaje, icono = 'success') {
+export async function toast(mensaje, icono = 'success') {
     try {
+        const alertaBase = await obtenerAlertaBase();
         alertaBase.fire({
             toast: true,
             position: 'top-end',
@@ -43,14 +54,15 @@ export function toast(mensaje, icono = 'success') {
  * Diálogo de confirmación antes de una acción irreversible (p. ej. eliminar).
  * Devuelve una promesa que resuelve en true/false según la elección del usuario.
  */
-export function confirmar({
+export async function confirmar({
     titulo = '¿Confirmar acción?',
     texto = 'Esta acción no se puede deshacer.',
     textoConfirmar = 'Sí, continuar',
     textoCancelar = 'Cancelar',
 } = {}) {
-    return alertaBase
-        .fire({
+    try {
+        const alertaBase = await obtenerAlertaBase();
+        const resultado = await alertaBase.fire({
             title: titulo,
             text: texto,
             icon: 'warning',
@@ -60,19 +72,21 @@ export function confirmar({
             cancelButtonText: textoCancelar,
             reverseButtons: true,
             focusCancel: true,
-        })
-        .then((resultado) => resultado.isConfirmed)
-        .catch((error) => {
-            console.error('No fue posible mostrar el diálogo de confirmación:', error);
-            return false;
         });
+
+        return resultado.isConfirmed;
+    } catch (error) {
+        console.error('No fue posible mostrar el diálogo de confirmación:', error);
+        return false;
+    }
 }
 
 /**
  * Mensaje de éxito centrado, para operaciones importantes (alta, publicación).
  */
-export function exito(mensaje, titulo = 'Listo') {
+export async function exito(mensaje, titulo = 'Listo') {
     try {
+        const alertaBase = await obtenerAlertaBase();
         alertaBase.fire({
             title: titulo,
             text: mensaje,
@@ -88,8 +102,9 @@ export function exito(mensaje, titulo = 'Listo') {
 /**
  * Mensaje de error centrado, para fallas de validación o del servidor.
  */
-export function error(mensaje, titulo = 'Ocurrió un problema') {
+export async function error(mensaje, titulo = 'Ocurrió un problema') {
     try {
+        const alertaBase = await obtenerAlertaBase();
         alertaBase.fire({
             title: titulo,
             text: mensaje,

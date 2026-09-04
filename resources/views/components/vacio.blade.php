@@ -17,7 +17,7 @@
         @endif
     </div>
 
-    <h3 class="relative text-lg font-semibold tracking-tight text-texto">{{ $titulo }}</h3>
+    <h2 class="relative text-lg font-semibold tracking-tight text-texto">{{ $titulo }}</h2>
 
     @if ($descripcion)
         <p class="relative mt-1.5 max-w-sm text-sm text-texto-secundario">{{ $descripcion }}</p>

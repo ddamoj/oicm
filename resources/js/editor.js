@@ -1,6 +1,3 @@
-import Quill from 'quill';
-import 'quill/dist/quill.snow.css';
-
 /**
  * Editor de contenido enriquecido para noticias (Fase 5, RF-NOT-001).
  * La barra de herramientas se limita exactamente a lo que
@@ -20,12 +17,22 @@ const OPCIONES_BARRA = [
  * sincronizado su HTML con la propiedad Livewire indicada, sin que Livewire
  * vuelva a renderizar el editor en cada tecleo (el contenedor va en
  * `wire:ignore`).
+ *
+ * Fase 10: Quill (y su CSS) se importan de forma diferida dentro de
+ * `iniciar()` en vez de al nivel del módulo, para que Vite los separe en su
+ * propio fragmento y las páginas públicas —que jamás muestran este
+ * editor— no descarguen su peso en el `app.js` compartido.
  */
 export default function editorEnriquecido(valorInicial, propiedad) {
     return {
         quill: null,
 
-        iniciar() {
+        async iniciar() {
+            const [{ default: Quill }] = await Promise.all([
+                import('quill'),
+                import('quill/dist/quill.snow.css'),
+            ]);
+
             this.quill = new Quill(this.$refs.editor, {
                 theme: 'snow',
                 modules: { toolbar: OPCIONES_BARRA },

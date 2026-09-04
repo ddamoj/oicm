@@ -15,7 +15,8 @@
             >
         </div>
 
-        <select wire:model.live="filtroCategoria" class="rounded-lg border border-borde bg-superficie-alterna px-3 py-2.5 text-sm text-texto focus:border-primario focus:outline-none focus:ring-2 focus:ring-acento-oscuro">
+        <label for="filtro-categoria-documentos-publico" class="sr-only">Filtrar por categoría</label>
+        <select id="filtro-categoria-documentos-publico" wire:model.live="filtroCategoria" class="rounded-lg border border-borde bg-superficie-alterna px-3 py-2.5 text-sm text-texto focus:border-primario focus:outline-none focus:ring-2 focus:ring-acento-oscuro">
             <option value="">Todas las categorías</option>
             @foreach ($categorias as $categoria)
                 <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
@@ -51,7 +52,7 @@
 
                     <x-badge variante="primario">{{ $documento->categoria?->nombre }}</x-badge>
 
-                    <h3 class="mt-4 text-lg font-bold tracking-tight text-texto">{{ $documento->nombre }}</h3>
+                    <h2 class="mt-4 text-lg font-bold tracking-tight text-texto">{{ $documento->nombre }}</h2>
 
                     @if ($documento->descripcion)
                         <p class="mt-2 text-sm leading-relaxed text-texto-secundario">{{ $documento->descripcion }}</p>

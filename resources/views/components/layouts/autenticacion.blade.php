@@ -14,7 +14,7 @@
         <a href="#contenido-autenticacion" class="saltar-contenido">Saltar al contenido principal</a>
 
         {{-- Panel institucional: se oculta en móvil para dejar el formulario al frente --}}
-        <div class="aurora-oicm relative hidden overflow-hidden lg:flex lg:w-2/5 lg:flex-col lg:justify-between lg:p-12 xl:w-1/2">
+        <aside aria-label="Presentación institucional" class="aurora-oicm relative hidden overflow-hidden lg:flex lg:w-2/5 lg:flex-col lg:justify-between lg:p-12 xl:w-1/2">
             <x-sello-oicm class="pointer-events-none absolute -bottom-24 -right-24 size-96 text-white/[0.06]" />
 
             <a href="{{ route('inicio') }}" class="relative flex items-center gap-3">
@@ -38,9 +38,9 @@
             </div>
 
             <p class="relative text-xs text-white/50">© {{ now()->year }} Órgano Interno de Control Municipal · Municipio de Oaxaca de Juárez</p>
-        </div>
+        </aside>
 
-        <div id="contenido-autenticacion" class="flex flex-1 flex-col items-center justify-center px-4 py-12 sm:px-6">
+        <main id="contenido-autenticacion" class="flex flex-1 flex-col items-center justify-center px-4 py-12 sm:px-6">
             {{-- Lockup visible solo en móvil, donde el panel institucional está oculto --}}
             <a href="{{ route('inicio') }}" class="mb-8 flex items-center gap-3 lg:hidden">
                 <img src="{{ asset('assets/sitio/images/logo-verde-horizontal.png') }}" alt="Municipio de Oaxaca de Juárez" class="h-8 w-auto">
@@ -49,7 +49,7 @@
             <div class="w-full max-w-sm">
                 {{ $slot }}
             </div>
-        </div>
+        </main>
 
         {{-- Mensajería del módulo de autenticación vía SweetAlert2 (nunca alertas Blade
              sueltas). El mensaje viaja en atributos data-* porque, desde la Fase 9, la

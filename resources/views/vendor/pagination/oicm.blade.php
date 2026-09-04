@@ -11,7 +11,7 @@
 
         <div class="flex flex-1 justify-between gap-2 sm:flex-none">
             @if ($paginator->onFirstPage())
-                <span class="inline-flex cursor-not-allowed items-center rounded-full border border-borde px-4 py-2 text-sm text-gris">Anterior</span>
+                <span aria-disabled="true" class="inline-flex cursor-not-allowed items-center rounded-full border border-borde px-4 py-2 text-sm text-texto-secundario">Anterior</span>
             @else
                 <a href="{{ $paginator->previousPageUrl() }}" rel="prev" class="inline-flex items-center rounded-full border border-borde px-4 py-2 text-sm font-medium text-texto hover:border-primario hover:text-primario">Anterior</a>
             @endif
@@ -19,7 +19,7 @@
             @if ($paginator->hasMorePages())
                 <a href="{{ $paginator->nextPageUrl() }}" rel="next" class="inline-flex items-center rounded-full border border-borde px-4 py-2 text-sm font-medium text-texto hover:border-primario hover:text-primario">Siguiente</a>
             @else
-                <span class="inline-flex cursor-not-allowed items-center rounded-full border border-borde px-4 py-2 text-sm text-gris">Siguiente</span>
+                <span aria-disabled="true" class="inline-flex cursor-not-allowed items-center rounded-full border border-borde px-4 py-2 text-sm text-texto-secundario">Siguiente</span>
             @endif
         </div>
     </nav>

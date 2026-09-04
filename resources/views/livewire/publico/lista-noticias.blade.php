@@ -76,7 +76,7 @@
                         <p class="text-xs font-semibold uppercase tracking-wide text-texto-secundario">
                             {{ $noticia->publicado_en?->translatedFormat('d \d\e F \d\e Y') }}
                         </p>
-                        <h3 class="mt-2 text-lg font-bold tracking-tight text-texto">{{ $noticia->titulo }}</h3>
+                        <h2 class="mt-2 text-lg font-bold tracking-tight text-texto">{{ $noticia->titulo }}</h2>
 
                         @if ($noticia->resumen)
                             <p class="mt-2 line-clamp-3 text-sm leading-relaxed text-texto-secundario">{{ $noticia->resumen }}</p>

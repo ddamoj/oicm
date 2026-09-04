@@ -100,6 +100,12 @@ class GestionNoticiasTest extends TestCase
         $this->assertNotNull($noticia->imagen_miniatura);
         Storage::disk('public')->assertExists($noticia->imagen_portada);
         Storage::disk('public')->assertExists($noticia->imagen_miniatura);
+
+        // Fase 10: la imagen se recodifica a WebP (menor peso, mejor LCP), nunca se conserva el JPG original.
+        $this->assertStringEndsWith('.webp', $noticia->imagen_portada);
+        $this->assertStringEndsWith('.webp', $noticia->imagen_miniatura);
+        $rutaAbsoluta = Storage::disk('public')->path($noticia->imagen_portada);
+        $this->assertSame('image/webp', mime_content_type($rutaAbsoluta));
     }
 
     public function test_rechaza_un_archivo_que_no_es_imagen(): void
