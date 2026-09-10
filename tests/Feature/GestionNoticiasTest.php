@@ -45,6 +45,20 @@ class GestionNoticiasTest extends TestCase
         $this->assertSame('borrador', $noticia->estatus);
     }
 
+    public function test_preparar_edicion_envia_el_contenido_al_editor_wire_ignore(): void
+    {
+        // El contenedor de Quill usa wire:ignore, así que Livewire nunca lo
+        // vuelve a renderizar: el HTML real solo puede llegarle a través de
+        // este evento de navegador, no del valor inicial de Alpine.
+        $usuario = User::factory()->administradorContenido()->create();
+        $noticia = Noticia::factory()->create(['contenido' => '<p>Contenido real</p>']);
+
+        Livewire::actingAs($usuario)
+            ->test(FormularioNoticia::class)
+            ->call('prepararEdicion', $noticia->id)
+            ->assertDispatched('editor:contenido:cargar', contenido: '<p>Contenido real</p>');
+    }
+
     public function test_el_html_malicioso_del_editor_se_guarda_saneado(): void
     {
         $usuario = User::factory()->administradorContenido()->create();

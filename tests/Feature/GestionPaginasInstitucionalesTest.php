@@ -59,6 +59,20 @@ class GestionPaginasInstitucionalesTest extends TestCase
         ]);
     }
 
+    public function test_preparar_edicion_envia_el_contenido_al_editor_wire_ignore(): void
+    {
+        // El contenedor de Quill usa wire:ignore, así que Livewire nunca lo
+        // vuelve a renderizar: el HTML real solo puede llegarle a través de
+        // este evento de navegador, no del valor inicial de Alpine.
+        $usuario = User::factory()->administradorContenido()->create();
+        $pagina = PaginaInstitucional::factory()->create(['contenido' => '<p>Contenido real</p>']);
+
+        Livewire::actingAs($usuario)
+            ->test(FormularioPaginaInstitucional::class)
+            ->call('prepararEdicion', $pagina->id)
+            ->assertDispatched('editor:contenido:cargar', contenido: '<p>Contenido real</p>');
+    }
+
     public function test_restaurar_una_version_desde_el_historial(): void
     {
         $usuario = User::factory()->administradorContenido()->create();

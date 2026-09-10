@@ -57,6 +57,11 @@ class FormularioPaginaInstitucional extends Component
     {
         $this->resetear();
         $this->dispatch('abrir-modal', nombre: 'formulario-pagina');
+
+        // El editor de Quill vive en un contenedor wire:ignore (Livewire no
+        // vuelve a renderizarlo), así que hay que empujarle el contenido a
+        // mano en vez de depender del valor inicial de Alpine.
+        $this->dispatch('editor:contenido:cargar', contenido: $this->contenido);
     }
 
     #[On('pagina:editar')]
@@ -74,6 +79,7 @@ class FormularioPaginaInstitucional extends Component
             $this->estatus = $pagina->estatus;
 
             $this->dispatch('abrir-modal', nombre: 'formulario-pagina');
+            $this->dispatch('editor:contenido:cargar', contenido: $this->contenido);
         } catch (\Throwable $excepcion) {
             Log::error('No fue posible cargar la página institucional a editar.', ['id' => $id, 'error' => $excepcion->getMessage()]);
             $this->dispatch('mostrar-error', mensaje: 'No fue posible cargar la página seleccionada.');

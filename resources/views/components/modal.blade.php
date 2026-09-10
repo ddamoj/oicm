@@ -43,10 +43,13 @@
             x-transition:leave="ease-institucional duration-150"
             x-transition:leave-start="opacity-100 scale-100"
             x-transition:leave-end="opacity-0 scale-95"
-            class="w-full {{ $anchos[$maxAncho] ?? $anchos['lg'] }} rounded-xl bg-superficie p-6 shadow-flotante"
+            class="flex max-h-[calc(100vh-2rem)] w-full {{ $anchos[$maxAncho] ?? $anchos['lg'] }} flex-col rounded-xl bg-superficie shadow-flotante"
             x-on:click.stop
         >
-            <div class="flex items-start justify-between gap-4">
+            {{-- Encabezado fijo: con contenido largo (p. ej. "Quiénes somos"),
+                 solo el cuerpo hace scroll para que el título y el botón de
+                 cerrar sigan siempre visibles y alcanzables. --}}
+            <div class="flex shrink-0 items-start justify-between gap-4 border-b border-borde p-6 pb-4">
                 @if ($titulo)
                     <h2 id="modal-titulo-{{ $nombre }}" class="text-xl font-semibold text-texto">{{ $titulo }}</h2>
                 @endif
@@ -63,7 +66,7 @@
                 </button>
             </div>
 
-            <div class="mt-4">
+            <div class="overflow-y-auto p-6 pt-4">
                 {{ $slot }}
             </div>
         </div>

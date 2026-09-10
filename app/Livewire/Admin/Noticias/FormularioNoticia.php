@@ -72,6 +72,11 @@ class FormularioNoticia extends Component
     {
         $this->resetear();
         $this->dispatch('abrir-modal', nombre: 'formulario-noticia');
+
+        // El editor de Quill vive en un contenedor wire:ignore (Livewire no
+        // vuelve a renderizarlo), así que hay que empujarle el contenido a
+        // mano en vez de depender del valor inicial de Alpine.
+        $this->dispatch('editor:contenido:cargar', contenido: $this->contenido);
     }
 
     #[On('noticia:editar')]
@@ -92,6 +97,7 @@ class FormularioNoticia extends Component
             $this->imagenActualUrl = $noticia->urlMiniatura();
 
             $this->dispatch('abrir-modal', nombre: 'formulario-noticia');
+            $this->dispatch('editor:contenido:cargar', contenido: $this->contenido);
         } catch (\Throwable $excepcion) {
             Log::error('No fue posible cargar la noticia a editar.', ['id' => $id, 'error' => $excepcion->getMessage()]);
             $this->dispatch('mostrar-error', mensaje: 'No fue posible cargar la noticia seleccionada.');
