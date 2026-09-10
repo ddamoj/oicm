@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\CabecerasSeguridad;
+use App\Http\Middleware\RegistrarVisita;
 use App\Http\Middleware\VerificarCuentaActiva;
 use App\Http\Middleware\VerificarRol;
 use Illuminate\Foundation\Application;
@@ -24,7 +25,11 @@ return Application::configure(basePath: dirname(__DIR__))
         // Cabeceras de seguridad (Fase 9) en toda respuesta web: CSP, HSTS,
         // X-Frame-Options, etc. Se aplica globalmente para no depender de que
         // cada ruta nueva la declare por separado.
-        $middleware->web(append: [CabecerasSeguridad::class]);
+        //
+        // `RegistrarVisita` sigue el mismo criterio: cuenta las visitas de las
+        // páginas públicas y descarta por su cuenta el panel, el flujo de
+        // autenticación y las peticiones internas de Livewire.
+        $middleware->web(append: [CabecerasSeguridad::class, RegistrarVisita::class]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

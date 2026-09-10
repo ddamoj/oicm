@@ -6,6 +6,7 @@ use App\Http\Controllers\EstradoDescargaController;
 use App\Http\Controllers\GaleriaController;
 use App\Http\Controllers\InstitucionalController;
 use App\Http\Controllers\NoticiaController;
+use App\Models\Direccion;
 use App\Models\Documento;
 use App\Models\Enlace;
 use App\Models\Galeria;
@@ -103,8 +104,11 @@ Route::middleware([
     'verified',
     'cuenta.activa',
 ])->prefix('admin')->name('admin.')->group(function () {
+    // Panel principal: resumen del estado del micrositio. Su contenido se
+    // ajusta al rol (la actividad de la bitácora y el conteo de cuentas solo
+    // se calculan para "administrador").
     Route::get('/', function () {
-        return view('admin.en-construccion', ['titulo' => 'Panel principal']);
+        return view('admin.panel');
     })->name('panel');
 
     Route::get('/perfil', function () {
@@ -151,9 +155,17 @@ Route::middleware([
         Route::get('/contactos', function () {
             return view('admin.contactos');
         })->name('contactos');
+
+        // Estadísticas de visitas al micrositio público: analítica propia,
+        // de solo lectura y sin datos personales, útil tanto para quien
+        // publica como para quien administra.
+        Route::get('/estadisticas', function () {
+            return view('admin.estadisticas');
+        })->name('estadisticas');
     });
 
-    // Usuarios y bitácora: exclusivos del rol "administrador" (RF-USR-001).
+    // Usuarios, catálogos y bitácora: exclusivos del rol "administrador"
+    // (RF-USR-001).
     Route::middleware('rol:administrador')->group(function () {
         Route::get('/usuarios', function () {
             return view('admin.usuarios');
@@ -162,6 +174,18 @@ Route::middleware([
         Route::get('/bitacora', function () {
             return view('admin.bitacora');
         })->name('bitacora');
+
+        // Estructura orgánica: Direcciones y sus departamentos. Es catálogo
+        // institucional —clasifica documentos, páginas y contactos, y la
+        // `clave` forma parte de las rutas públicas—, por eso queda fuera del
+        // alcance del rol "administrador_contenido".
+        Route::get('/direcciones', function () {
+            return view('admin.direcciones');
+        })->name('direcciones');
+
+        Route::get('/direcciones/{direccion}/departamentos', function (Direccion $direccion) {
+            return view('admin.direcciones-departamentos', ['direccion' => $direccion]);
+        })->name('direcciones.departamentos');
     });
 });
 

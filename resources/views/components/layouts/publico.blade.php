@@ -21,25 +21,25 @@
                 <div class="flex h-18 items-center justify-between gap-4 py-3">
                     <a href="{{ route('inicio') }}" class="flex shrink-0 items-center gap-3">
                         <img src="{{ asset('assets/sitio/images/logo-verde-horizontal.png') }}" alt="Municipio de Oaxaca de Juárez" class="h-9 w-auto">
-                        <span class="hidden whitespace-nowrap border-l border-borde pl-3 font-sans text-sm font-bold leading-tight tracking-tight text-primario xl:block">
+                        <span class="hidden whitespace-nowrap border-l border-borde pl-3 font-sans text-sm font-bold leading-tight tracking-tight text-primario 2xl:block">
                             Órgano Interno de<br>Control Municipal
                         </span>
                     </a>
 
                     {{-- Navegación de escritorio --}}
-                    <nav aria-label="Principal" class="hidden min-w-0 lg:block">
+                    <nav aria-label="Principal" class="hidden min-w-0 xl:block">
                         <ul class="flex items-center gap-0.5 whitespace-nowrap text-[13px] font-bold tracking-tight">
                             @foreach (\App\Support\NavegacionPublica::enlaces() as $etiqueta => $ruta)
                                 <li>
                                     <a
                                         href="{{ route($ruta) }}"
-                                        class="relative block rounded-full px-3 py-2.5 transition-colors duration-150 hover:bg-primario-claro hover:text-primario
+                                        class="relative block rounded-full px-2.5 py-2.5 transition-colors duration-150 hover:bg-primario-claro hover:text-primario 2xl:px-3
                                                {{ request()->routeIs($ruta) ? 'text-primario' : 'text-texto' }}"
                                         @if (request()->routeIs($ruta)) aria-current="page" @endif
                                     >
                                         {{ $etiqueta }}
                                         @if (request()->routeIs($ruta))
-                                            <span class="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-acento-oscuro" aria-hidden="true"></span>
+                                            <span class="absolute inset-x-2.5 -bottom-0.5 h-0.5 rounded-full bg-acento-oscuro 2xl:inset-x-3" aria-hidden="true"></span>
                                         @endif
                                     </a>
                                 </li>
@@ -70,7 +70,7 @@
                         <button
                             type="button"
                             x-on:click="menuAbierto = !menuAbierto"
-                            class="rounded-full p-2.5 text-primario hover:bg-primario-claro lg:hidden"
+                            class="rounded-full p-2.5 text-primario hover:bg-primario-claro xl:hidden"
                             :aria-expanded="menuAbierto.toString()"
                             aria-controls="menu-movil"
                             aria-label="Abrir menú de navegación"
@@ -94,7 +94,7 @@
                     x-transition:enter-start="opacity-0 -translate-y-2"
                     x-transition:enter-end="opacity-100 translate-y-0"
                     aria-label="Principal (móvil)"
-                    class="border-t border-borde pb-4 lg:hidden"
+                    class="border-t border-borde pb-4 xl:hidden"
                 >
                     <ul class="mt-2 flex flex-col gap-1 text-sm font-semibold">
                         @foreach (\App\Support\NavegacionPublica::enlaces() as $etiqueta => $ruta)
@@ -176,6 +176,13 @@
                 <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-xs text-white/60 sm:flex-row">
                     <p>&copy; {{ now()->year }} Municipio de Oaxaca de Juárez · Órgano Interno de Control Municipal</p>
                     <div class="flex items-center gap-4">
+                        {{-- Contador de visitas: cifra agregada, sin datos
+                             personales. El detalle vive en el panel. --}}
+                        @isset($contadorVisitas)
+                            <p title="{{ number_format($contadorVisitas['hoy']) }} visitas hoy">
+                                {{ number_format($contadorVisitas['total']) }} visitas al micrositio
+                            </p>
+                        @endisset
                         <a href="{{ route('aviso-privacidad') }}" class="hover:text-white">Aviso de privacidad</a>
                         <p>Gobierno Municipal 2025-2027</p>
                     </div>
