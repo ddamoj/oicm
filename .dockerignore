@@ -1,0 +1,58 @@
+# =============================================================
+# .dockerignore — excluidos del contexto de build de Docker
+# =============================================================
+
+# Seguridad: variables de entorno (nunca en la imagen)
+.env
+.env.*
+!.env.example
+
+# Dependencias (se instalan dentro del Dockerfile)
+vendor/
+node_modules/
+
+# Control de versiones
+.git/
+.gitignore
+.gitattributes
+
+# Assets compilados localmente (se recompilan en el Dockerfile)
+public/build/
+public/hot
+
+# Cache de Laravel del entorno local
+bootstrap/cache/*.php
+
+# Storage local
+storage/logs/*.log
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/views/*
+
+# Storage persistente del servidor (bind mount — nunca en la imagen)
+storage-data/
+
+# Tests y herramientas de calidad (no van en producción)
+tests/
+phpunit.xml
+.pint.toml
+pint.json
+
+# Herramientas de desarrollo / editores
+.cursor/
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Documentación y contexto del proyecto (incluye la ERS y los insumos de la ATD)
+CLAUDE.md
+AGENTS.md
+context/
+README.md
+
+# Compose (no van dentro de la imagen)
+deploy/docker-compose*.yml
+
+# Sail (entorno de desarrollo local)
+compose.yaml

@@ -1,0 +1,46 @@
+# =============================================================
+# Micrositio OICM — Docker Compose para PRODUCCIÓN (solo la App)
+# =============================================================
+# La base de datos MySQL corre en un compose SEPARADO para que NO se
+# reconstruya en cada deploy y su volumen persista independiente:
+#   deploy/docker-compose.mysql.yml
+#
+# ORDEN DE ARRANQUE EN EL SERVIDOR:
+#   1. MySQL (UNA SOLA VEZ, no se repite en cada deploy):
+#        docker compose --env-file .env -f deploy/docker-compose.mysql.yml up -d
+#   2. La app (en cada deploy):
+#        bash deploy/scripts/deploy-production.sh
+#
+# REQUISITO: .env configurado en /srv/munioax/oicm/.env
+#            (usa .env.production.example como plantilla)
+# =============================================================
+
+# Nombre de proyecto EXPLÍCITO: sin esto, Compose usa el nombre del
+# directorio ('deploy'), que colisiona con otros portales del servidor
+# (mejorav4, oaxacaconecta, etc.) y hace que --remove-orphans borre sus
+# contenedores.
+name: oicm_production
+
+services:
+
+  app:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: oicm-app:production
+    container_name: oicm_app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8088}:80"
+    volumes:
+      - ../.env:/var/www/html/.env:ro
+      # Storage persistente (documentos, imágenes de noticias, galería,
+      # logs). Bind mount del host: persiste entre deploys.
+      - ../storage-data:/var/www/html/storage
+    networks:
+      - oicm_network
+
+networks:
+  oicm_network:
+    external: true
+    name: oicm_network

@@ -1,0 +1,73 @@
+# =============================================================
+# Micrositio OICM — Docker Compose para STAGING
+# =============================================================
+# App (PHP+Nginx+Supervisor) + MySQL 8.4 en el mismo compose.
+#
+# INICIO RÁPIDO:
+#   bash /srv/munioax/oicm/deploy/scripts/deploy-staging.sh
+#
+# REQUISITO: repo clonado en /srv/munioax/oicm (el script crea el .env
+#            automáticamente si no existe).
+# =============================================================
+
+# Nombre de proyecto EXPLÍCITO: sin esto, Compose usa el nombre del
+# directorio ('deploy'), que colisiona con otros portales del servidor
+# (mejorav4, oaxacaconecta, etc.) y hace que --remove-orphans borre sus
+# contenedores.
+name: oicm_staging
+
+services:
+
+  # -----------------------------------------------------------
+  # App: PHP 8.4 + Nginx + Supervisor
+  # -----------------------------------------------------------
+  app:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: oicm-app:staging
+    container_name: oicm_app_staging
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8088}:80"
+    volumes:
+      - ../.env:/var/www/html/.env:ro
+      - ../storage-data:/var/www/html/storage
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      - DB_HOST=mysql
+    networks:
+      - oicm_staging
+
+  # -----------------------------------------------------------
+  # MySQL 8.4 — base de datos de staging
+  # -----------------------------------------------------------
+  mysql:
+    image: mysql:8.4
+    container_name: oicm_mysql_staging
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "-p${DB_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - oicm_staging
+
+volumes:
+  mysql_data:
+    name: oicm_staging_mysql
+
+networks:
+  oicm_staging:
+    name: oicm_staging_network

@@ -1,0 +1,51 @@
+# =============================================================
+# Micrositio OICM — MySQL 8.4 de PRODUCCIÓN
+# =============================================================
+# Se levanta UNA SOLA VEZ en el servidor de producción y NO se toca en
+# cada deploy de la aplicación.
+#
+# PRIMER ARRANQUE:
+#   cd /srv/munioax/oicm
+#   docker compose --env-file .env -f deploy/docker-compose.mysql.yml up -d
+#
+# VERIFICAR:
+#   docker exec oicm_mysql mysqladmin ping -h 127.0.0.1
+#
+# Crea automáticamente la red 'oicm_network' que usa la app.
+# =============================================================
+
+# Nombre de proyecto EXPLÍCITO: sin esto, Compose usa el nombre del
+# directorio ('deploy') y colisiona con los demás portales del servidor.
+name: oicm_mysql
+
+services:
+
+  mysql:
+    image: mysql:8.4
+    container_name: oicm_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      # NUNCA borrar este volumen — contiene toda la BD de producción.
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "-p${DB_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - oicm_network
+
+volumes:
+  mysql_data:
+    name: oicm_production_mysql
+
+networks:
+  oicm_network:
+    name: oicm_network
+    driver: bridge
