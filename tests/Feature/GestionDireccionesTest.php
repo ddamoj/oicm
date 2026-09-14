@@ -156,6 +156,30 @@ class GestionDireccionesTest extends TestCase
         $this->assertDatabaseHas('direcciones', ['id' => $conContacto->id, 'deleted_at' => null]);
     }
 
+    public function test_las_acciones_solo_icono_muestran_tooltip_descriptivo(): void
+    {
+        $usuario = User::factory()->administrador()->create();
+        Direccion::factory()->create(['activa' => true]);
+
+        Livewire::actingAs($usuario)
+            ->test(ListaDirecciones::class)
+            ->assertSee('>Departamentos</span>', false)
+            ->assertSee('>Editar</span>', false)
+            ->assertSee('>Retirar del sitio público</span>', false)
+            ->assertSee('>Eliminar</span>', false);
+    }
+
+    public function test_el_tooltip_de_visibilidad_refleja_el_estado_de_la_direccion(): void
+    {
+        $usuario = User::factory()->administrador()->create();
+        Direccion::factory()->create(['activa' => false]);
+
+        Livewire::actingAs($usuario)
+            ->test(ListaDirecciones::class)
+            ->assertSee('>Mostrar en el sitio público</span>', false)
+            ->assertDontSee('>Retirar del sitio público</span>', false);
+    }
+
     public function test_visitante_anonimo_no_accede_al_panel_de_direcciones(): void
     {
         $this->get(route('admin.direcciones'))->assertRedirect(route('login'));
