@@ -9,7 +9,7 @@
 
         {{-- Tratamiento de datos del propio micrositio: verificado en código, no
              hay ningún formulario público que recolecte datos personales. --}}
-        <div class="prose prose-lg max-w-none text-texto prose-headings:text-texto prose-a:text-primario">
+        <div class="texto-justificado prose prose-lg max-w-none text-texto prose-headings:text-texto prose-a:text-primario">
             <p>
                 El micrositio institucional del Órgano Interno de Control Municipal (OICM) del
                 Municipio de Oaxaca de Juárez es un canal de consulta pública: la ciudadanía y las
@@ -62,7 +62,7 @@
                         <h3 class="font-semibold text-texto">{{ $aviso->nombre }}</h3>
 
                         @if ($aviso->descripcion)
-                            <p class="mt-2 text-sm text-texto-secundario">{{ $aviso->descripcion }}</p>
+                            <p class="texto-justificado mt-2 text-sm text-texto-secundario">{{ $aviso->descripcion }}</p>
                         @endif
 
                         <p class="mt-3 text-xs font-medium uppercase tracking-wide text-primario">

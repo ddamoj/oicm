@@ -8,7 +8,7 @@
         <x-migas :items="['Quiénes somos' => null]" class="mb-8" />
 
         @if ($pagina)
-            <div class="prose prose-lg max-w-none text-texto prose-headings:text-texto prose-a:text-primario">
+            <div class="texto-justificado prose prose-lg max-w-none text-texto prose-headings:text-texto prose-a:text-primario">
                 {!! $pagina->contenido !!}
             </div>
         @else
@@ -55,7 +55,7 @@
                     >
                         <div class="border-t border-borde px-6 py-5">
                             @if ($direccion->descripcion)
-                                <p class="mb-4 text-sm leading-relaxed text-texto-secundario">{{ $direccion->descripcion }}</p>
+                                <p class="texto-justificado mb-4 text-sm leading-relaxed text-texto-secundario">{{ $direccion->descripcion }}</p>
                             @endif
 
                             @if ($direccion->departamentos->isNotEmpty())

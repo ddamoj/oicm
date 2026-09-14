@@ -21,7 +21,7 @@
                 {{ $noticia->titulo }}
             </h1>
 
-            <div class="prose prose-lg mt-8 max-w-none text-texto prose-headings:text-texto prose-a:text-primario">
+            <div class="texto-justificado prose prose-lg mt-8 max-w-none text-texto prose-headings:text-texto prose-a:text-primario">
                 {!! $noticia->contenido !!}
             </div>
 

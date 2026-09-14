@@ -157,6 +157,52 @@
             linear-gradient(165deg, var(--color-primario) 0%, var(--color-primario-oscuro) 62%, var(--color-primario-profundo) 100%);
     }
 
+    /* Texto de lectura justificado (petición del cliente). Se aplica a los
+       bloques de contenido corrido —páginas institucionales, noticias, aviso
+       de privacidad— y a los textos descriptivos de las tarjetas. Nunca a
+       títulos ni a encabezados de tabla.
+
+       El guionado automático es obligatorio aquí, no decorativo: sin él, en
+       columnas angostas (móvil) el justificado abre huecos enormes entre
+       palabras ("ríos" blancos) y la lectura se rompe. Funciona porque el
+       <html> declara lang="es" y el navegador aplica el diccionario correcto.
+       `hyphenate-limit-chars` evita cortes feos: mínimo 6 letras por palabra
+       y 3 a cada lado del guion. `text-align-last: left` deja la última línea
+       de cada párrafo sin estirar, como manda la tipografía clásica. */
+    .texto-justificado,
+    .texto-justificado :where(p, li, blockquote, dd) {
+        text-align: justify;
+        text-align-last: left;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+        hyphenate-limit-chars: 6 3 3;
+        /* Una URL o un oficio largo no deben desbordar la caja al justificar. */
+        overflow-wrap: break-word;
+    }
+
+    /* `text-align` se hereda: si la clase va en un contenedor, sus títulos se
+       justificarían también y un título de dos líneas quedaría con la primera
+       estirada. Aquí se devuelven a la izquierda los elementos que nunca deben
+       justificarse, sin importar dónde se aplique la clase. */
+    .texto-justificado :where(h1, h2, h3, h4, h5, h6, figcaption, caption, th, dt) {
+        text-align: left;
+        text-align-last: auto;
+        -webkit-hyphens: manual;
+        hyphens: manual;
+    }
+
+    /* Salvaguarda de contraste en superficies oscuras: la regla base pinta
+       todos los encabezados con `text-texto` (casi negro), y esa declaración
+       de elemento gana sobre el `text-white` heredado del contenedor. En la
+       aurora (hero) y en el pie el resultado era texto negro sobre verde.
+       Con `:where()` la especificidad sigue siendo la de `.aurora-oicm`, así
+       que cualquier utilidad de color puesta en el propio encabezado
+       (p. ej. `text-acento`) sigue mandando. */
+    .aurora-oicm :where(h1, h2, h3, h4, h5, h6),
+    .superficie-oscura :where(h1, h2, h3, h4, h5, h6) {
+        color: inherit;
+    }
+
     /* Editor Quill (Noticias/Páginas institucionales): Quill convierte el
        propio elemento de referencia (con la clase `min-h-*` de Tailwind) en
        `.ql-container`, pero el `.ql-editor` contenteditable que crea dentro

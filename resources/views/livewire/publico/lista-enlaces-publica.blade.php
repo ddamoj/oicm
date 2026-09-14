@@ -53,7 +53,7 @@
                                 </div>
 
                                 @if ($enlace->descripcion)
-                                    <p class="mt-2 text-sm text-texto-secundario">{{ $enlace->descripcion }}</p>
+                                    <p class="texto-justificado mt-2 text-sm text-texto-secundario">{{ $enlace->descripcion }}</p>
                                 @endif
 
                                 <p class="mt-3 text-xs font-medium uppercase tracking-wide text-primario">

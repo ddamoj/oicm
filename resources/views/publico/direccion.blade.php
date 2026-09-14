@@ -5,7 +5,7 @@
         <x-migas :items="['Direcciones' => route('direcciones'), $direccion->nombre => null]" class="mb-8" />
 
         @if ($pagina)
-            <div class="prose prose-lg max-w-none text-texto prose-headings:text-texto prose-a:text-primario">
+            <div class="texto-justificado prose prose-lg max-w-none text-texto prose-headings:text-texto prose-a:text-primario">
                 {!! $pagina->contenido !!}
             </div>
         @endif

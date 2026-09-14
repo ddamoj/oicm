@@ -79,7 +79,7 @@
                         <h2 class="mt-2 text-lg font-bold tracking-tight text-texto">{{ $noticia->titulo }}</h2>
 
                         @if ($noticia->resumen)
-                            <p class="mt-2 line-clamp-3 text-sm leading-relaxed text-texto-secundario">{{ $noticia->resumen }}</p>
+                            <p class="texto-justificado mt-2 line-clamp-3 text-sm leading-relaxed text-texto-secundario">{{ $noticia->resumen }}</p>
                         @endif
                     </div>
                 </x-tarjeta>

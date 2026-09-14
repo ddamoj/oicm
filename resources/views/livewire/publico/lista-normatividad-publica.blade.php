@@ -48,7 +48,7 @@
                             <x-badge variante="primario">{{ ucfirst($item->ambito) }}</x-badge>
                             <h2 class="mt-3 text-lg font-bold tracking-tight text-texto">{{ $item->titulo }}</h2>
                             @if ($item->descripcion)
-                                <p class="mt-1 text-sm leading-relaxed text-texto-secundario">{{ $item->descripcion }}</p>
+                                <p class="texto-justificado mt-1 text-sm leading-relaxed text-texto-secundario">{{ $item->descripcion }}</p>
                             @endif
                         </div>
 

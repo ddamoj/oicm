@@ -36,7 +36,10 @@
                 </p>
             @endisset
 
-            <h1 class="text-5xl font-bold leading-[1.02] tracking-tight sm:text-6xl {{ $alto ? 'lg:text-7xl' : '' }}">
+            {{-- El color se declara aquí de forma explícita: la regla base de
+                 app.css pinta todo encabezado con `text-texto` (casi negro) y
+                 ese color gana sobre el `text-white` heredado del <header>. --}}
+            <h1 class="text-balance text-5xl font-bold leading-[1.02] tracking-tight text-white sm:text-6xl {{ $alto ? 'lg:text-7xl' : '' }}">
                 {!! $tituloHtml !!}
             </h1>
 

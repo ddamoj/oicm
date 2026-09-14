@@ -12,7 +12,7 @@
                 <div>
                     <x-badge variante="advertencia" :punto="true">Quejas y denuncias</x-badge>
                     <h2 class="mt-2 text-lg font-bold tracking-tight text-texto">¿Detectaste una irregularidad?</h2>
-                    <p class="mt-1 text-sm text-texto-secundario">Repórtala a través del canal de la Dirección de Quejas, Denuncias, Investigación y Situación Patrimonial:</p>
+                    <p class="texto-justificado mt-1 text-sm text-texto-secundario">Repórtala a través del canal de la Dirección de Quejas, Denuncias, Investigación y Situación Patrimonial:</p>
                 </div>
                 <p class="shrink-0 rounded-lg bg-white px-5 py-3 text-sm font-semibold text-primario-oscuro">{{ $canalQuejas->canal_quejas_denuncias }}</p>
             </div>

@@ -26,7 +26,7 @@
                         <h3 class="mt-3 text-lg font-bold tracking-tight text-texto">{{ $direccion->nombre }}</h3>
 
                         @if ($direccion->descripcion)
-                            <p class="mt-2 text-sm leading-relaxed text-texto-secundario">{{ $direccion->descripcion }}</p>
+                            <p class="texto-justificado mt-2 text-sm leading-relaxed text-texto-secundario">{{ $direccion->descripcion }}</p>
                         @endif
                     </x-tarjeta>
                 @endforeach

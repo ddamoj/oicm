@@ -37,19 +37,19 @@
                 <x-tarjeta href="{{ route('documentos') }}" :flotante="true" acento="primario">
                     <x-badge variante="primario" :punto="true">Formatos y oficios</x-badge>
                     <h3 class="mt-4 text-lg font-bold tracking-tight">Documentos institucionales</h3>
-                    <p class="mt-2 text-sm text-texto-secundario">Formatos, oficios y bases de datos, organizados por categoría y disponibles sin necesidad de iniciar sesión.</p>
+                    <p class="texto-justificado mt-2 text-sm text-texto-secundario">Formatos, oficios y bases de datos, organizados por categoría y disponibles sin necesidad de iniciar sesión.</p>
                 </x-tarjeta>
 
                 <x-tarjeta href="{{ route('normatividad') }}" :flotante="true" acento="acento">
                     <x-badge variante="acento" :punto="true">Marco legal</x-badge>
                     <h3 class="mt-4 text-lg font-bold tracking-tight">Normatividad aplicable</h3>
-                    <p class="mt-2 text-sm text-texto-secundario">Leyes, reglamentos y lineamientos de ámbito federal, estatal y municipal que rigen la actuación del OICM.</p>
+                    <p class="texto-justificado mt-2 text-sm text-texto-secundario">Leyes, reglamentos y lineamientos de ámbito federal, estatal y municipal que rigen la actuación del OICM.</p>
                 </x-tarjeta>
 
                 <x-tarjeta href="{{ route('enlaces') }}" :flotante="true" acento="neutro">
                     <x-badge :punto="true">Trámites externos</x-badge>
                     <h3 class="mt-4 text-lg font-bold tracking-tight">Enlaces de interés</h3>
-                    <p class="mt-2 text-sm text-texto-secundario">Declaración patrimonial, evaluación de control interno, entrega-recepción y otros trámites vinculados.</p>
+                    <p class="texto-justificado mt-2 text-sm text-texto-secundario">Declaración patrimonial, evaluación de control interno, entrega-recepción y otros trámites vinculados.</p>
                 </x-tarjeta>
             </div>
         @else
@@ -64,7 +64,7 @@
                         <x-badge :variante="$acentosAccesoRapido[$indice % 3]" :punto="true">Trámite externo</x-badge>
                         <h3 class="mt-4 text-lg font-bold tracking-tight">{{ $enlace->nombre }}</h3>
                         @if ($enlace->descripcion)
-                            <p class="mt-2 text-sm text-texto-secundario">{{ $enlace->descripcion }}</p>
+                            <p class="texto-justificado mt-2 text-sm text-texto-secundario">{{ $enlace->descripcion }}</p>
                         @endif
                     </x-tarjeta>
                 @endforeach

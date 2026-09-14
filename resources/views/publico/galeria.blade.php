@@ -35,7 +35,7 @@
                             </p>
                             <h2 class="mt-2 text-lg font-bold tracking-tight text-texto">{{ $galeria->titulo }}</h2>
                             @if ($galeria->descripcion)
-                                <p class="mt-2 text-sm text-texto-secundario">{{ Str::limit($galeria->descripcion, 100) }}</p>
+                                <p class="texto-justificado mt-2 text-sm text-texto-secundario">{{ Str::limit($galeria->descripcion, 100) }}</p>
                             @endif
                         </div>
                     </x-tarjeta>

@@ -55,7 +55,7 @@
                     <h2 class="mt-4 text-lg font-bold tracking-tight text-texto">{{ $documento->nombre }}</h2>
 
                     @if ($documento->descripcion)
-                        <p class="mt-2 text-sm leading-relaxed text-texto-secundario">{{ $documento->descripcion }}</p>
+                        <p class="texto-justificado mt-2 text-sm leading-relaxed text-texto-secundario">{{ $documento->descripcion }}</p>
                     @endif
 
                     <div class="mt-4 flex items-center gap-3 text-xs text-texto-secundario">
