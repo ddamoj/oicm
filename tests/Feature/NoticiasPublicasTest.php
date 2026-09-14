@@ -89,6 +89,38 @@ class NoticiasPublicasTest extends TestCase
         $this->assertTrue($dentro->publicado_en->between('2026-05-01', '2026-05-31'));
     }
 
+    public function test_el_detalle_muestra_la_imagen_de_portada_cuando_la_noticia_tiene_una(): void
+    {
+        $noticia = Noticia::factory()->create([
+            'titulo' => 'Informe anual de resultados',
+            'imagen_portada' => 'noticias/portada-informe.jpg',
+            'imagen_alt' => 'Sesión de cabildo durante la presentación del informe',
+        ]);
+
+        $respuesta = $this->get(route('noticias.mostrar', $noticia));
+
+        $respuesta->assertOk();
+        // La portada se sirve desde el disco público, con su texto alternativo.
+        $respuesta->assertSee('/storage/noticias/portada-informe.jpg', false);
+        $respuesta->assertSee('Sesión de cabildo durante la presentación del informe');
+    }
+
+    public function test_el_detalle_omite_el_bloque_de_imagen_cuando_la_noticia_no_tiene_portada(): void
+    {
+        $noticia = Noticia::factory()->create([
+            'titulo' => 'Comunicado sin fotografía',
+            'imagen_portada' => null,
+            'imagen_alt' => null,
+        ]);
+
+        $respuesta = $this->get(route('noticias.mostrar', $noticia));
+
+        $respuesta->assertOk();
+        // Sin portada no debe quedar ni la banda panorámica vacía ni un <img> roto.
+        $respuesta->assertDontSee('aspect-[21/9]', false);
+        $respuesta->assertDontSee('/storage/noticias/', false);
+    }
+
     public function test_busqueda_sin_resultados_muestra_mensaje(): void
     {
         Noticia::factory()->create(['titulo' => 'Noticia existente']);
